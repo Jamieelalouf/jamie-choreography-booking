@@ -11,10 +11,21 @@ function assert(condition, message) {
 const htmlPath = path.join(__dirname, 'index.html');
 const cssPath = path.join(__dirname, 'styles.css');
 const jsPath = path.join(__dirname, 'app.js');
+const vercelConfigPath = path.join(__dirname, 'vercel.json');
 
 const html = fs.readFileSync(htmlPath, 'utf8');
 const css = fs.readFileSync(cssPath, 'utf8');
 let js = fs.readFileSync(jsPath, 'utf8');
+assert(fs.existsSync(vercelConfigPath), 'vercel.json is missing at repository root.');
+
+let vercelConfig;
+try {
+  vercelConfig = JSON.parse(fs.readFileSync(vercelConfigPath, 'utf8'));
+} catch (error) {
+  throw new Error(`vercel.json must be valid JSON: ${error.message}`);
+}
+assert(vercelConfig && typeof vercelConfig === 'object', 'vercel.json must contain a JSON object.');
+assert(vercelConfig.outputDirectory === '.', 'vercel.json outputDirectory must be ".".');
 
 assert(html.includes('class="lang-toggle"'), 'Language toggle missing from nav.');
 assert(html.includes('data-lang="en"') && html.includes('data-lang="fr"'), 'Language toggle buttons for EN/FR missing.');
