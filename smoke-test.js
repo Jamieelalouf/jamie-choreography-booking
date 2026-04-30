@@ -12,6 +12,7 @@ const htmlPath = path.join(__dirname, 'index.html');
 const cssPath = path.join(__dirname, 'styles.css');
 const jsPath = path.join(__dirname, 'app.js');
 const vercelConfigPath = path.join(__dirname, 'vercel.json');
+const netlifyConfigPath = path.join(__dirname, 'netlify.toml');
 
 const html = fs.readFileSync(htmlPath, 'utf8');
 const css = fs.readFileSync(cssPath, 'utf8');
@@ -26,6 +27,11 @@ try {
 }
 assert(vercelConfig && typeof vercelConfig === 'object', 'vercel.json must contain a JSON object.');
 assert(vercelConfig.outputDirectory === '.', 'vercel.json outputDirectory must be ".".');
+assert(fs.existsSync(netlifyConfigPath), 'netlify.toml is missing at repository root.');
+
+const netlifyConfig = fs.readFileSync(netlifyConfigPath, 'utf8');
+assert(/^\s*publish\s*=\s*(['"])\.\1\s*$/m.test(netlifyConfig), 'netlify.toml publish must be ".".');
+assert(/^\s*command\s*=\s*(['"])npm run build\1\s*$/m.test(netlifyConfig), 'netlify.toml command must be "npm run build".');
 
 assert(html.includes('class="lang-toggle"'), 'Language toggle missing from nav.');
 assert(html.includes('data-lang="en"') && html.includes('data-lang="fr"'), 'Language toggle buttons for EN/FR missing.');
