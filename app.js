@@ -388,14 +388,6 @@ window.addEventListener('scroll', () => {
   siteHeader.classList.toggle('scrolled', window.scrollY > 12);
 });
 
-const heroVisual = document.querySelector('.hero-visual');
-window.addEventListener('pointermove', (event) => {
-  if (!heroVisual || window.innerWidth < 920) return;
-  const x = (event.clientX / window.innerWidth - 0.5) * 6;
-  const y = (event.clientY / window.innerHeight - 0.5) * 6;
-  heroVisual.style.transform = `translate3d(${x}px, ${y}px, 0)`;
-});
-
 applyTranslations();
 
 export { getEstimate, translations };
