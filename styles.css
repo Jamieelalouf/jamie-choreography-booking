@@ -524,6 +524,39 @@ span {
   gap: 0.7rem;
 }
 
+.labs-training-links {
+  margin-top: 0.95rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.65rem 0.85rem;
+}
+
+.labs-training-label {
+  margin: 0;
+  color: #d8dfec;
+  font-size: 0.9rem;
+}
+
+.labs-training-link {
+  border: 1px solid rgba(221, 232, 255, 0.26);
+  border-radius: 999px;
+  padding: 0.38rem 0.7rem;
+  color: #e9f1ff;
+  font-size: 0.86rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  text-decoration: none;
+  background: rgba(205, 220, 248, 0.08);
+  transition: border-color 180ms ease, background-color 180ms ease, transform 180ms ease;
+}
+
+.labs-training-link:hover {
+  border-color: rgba(238, 245, 255, 0.55);
+  background: rgba(215, 229, 255, 0.16);
+  transform: translateY(-1px);
+}
+
 .gallery-grid {
   margin-top: 1.5rem;
   grid-template-columns: 1.25fr 1fr 1fr;

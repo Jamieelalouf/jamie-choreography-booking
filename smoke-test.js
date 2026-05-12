@@ -24,12 +24,18 @@ requiredFiles.forEach((rel) => {
 const html = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
 const css = fs.readFileSync(path.join(root, 'styles.css'), 'utf8');
 const js = fs.readFileSync(path.join(root, 'app.js'), 'utf8');
+const instagramUrl1 = 'https://www.instagram.com/p/DXXwNOaj_-1/?hl=en';
+const instagramUrl2 = 'https://www.instagram.com/p/DXPmW03jrC1/?hl=en&img_index=3';
 
 const parseCheck = spawnSync(process.execPath, ['--check', path.join(root, 'app.js')], { encoding: 'utf8' });
 assert(parseCheck.status === 0, `app.js failed parse check: ${parseCheck.stderr || parseCheck.stdout}`);
 
 ['id="services"', 'id="rates"', 'id="workshops"', 'id="vision-labs"', 'id="booking"', 'href="assets/vision-labs-sample-workbook.pdf"'].forEach((needle) => {
   assert(html.includes(needle), `index.html missing required marker: ${needle}`);
+});
+
+[instagramUrl1, instagramUrl2].forEach((url) => {
+  assert(html.includes(url), `index.html missing required Instagram URL: ${url}`);
 });
 
 ['WORKBOOK_LINK_HERE'].forEach((needle) => {
@@ -114,8 +120,12 @@ bannedPhrases.forEach((phrase) => {
   assert(!combined.includes(phrase), `Banned phrase found: "${phrase}"`);
 });
 
-const externalUrlRegex = /https?:\/\//i;
-assert(!externalUrlRegex.test(html), 'External http(s) URL found in index.html.');
+const externalUrlRegex = /https?:\/\/[^\s"'<>)]*/gi;
+const htmlExternalUrls = html.match(externalUrlRegex) || [];
+const allowedExternalUrls = new Set([instagramUrl1, instagramUrl2]);
+const unexpectedHtmlExternalUrls = htmlExternalUrls.filter((url) => !allowedExternalUrls.has(url));
+assert(unexpectedHtmlExternalUrls.length === 0, `Unexpected external http(s) URL found in index.html: ${unexpectedHtmlExternalUrls.join(', ')}`);
+assert(htmlExternalUrls.length === allowedExternalUrls.size, 'index.html must include exactly the two allowed Instagram URLs and no other external URLs.');
 assert(!externalUrlRegex.test(css), 'External http(s) URL found in styles.css.');
 assert(!externalUrlRegex.test(js), 'External http(s) URL found in app.js.');
 

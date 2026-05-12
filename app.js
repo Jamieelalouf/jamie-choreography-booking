@@ -70,6 +70,9 @@ const translations = {
       card3Body: 'Dancers leave with more clarity, stronger intention, and a better understanding of how to improve.',
       workbook: 'View sample workbook',
       cta: 'Bring Vision Labs to your studio',
+      trainingLabel: 'Get a feel for the training',
+      trainingClip1: 'Training clip 01',
+      trainingClip2: 'Training clip 02',
     },
     why: {
       title: 'Why studios book Jamie',
@@ -223,6 +226,9 @@ const translations = {
       card3Body: 'Structure studio-friendly qui renforce les habitudes, le feedback et un développement prêt compétition.',
       workbook: 'Voir un exemple de workbook',
       cta: 'Amener Vision Labs dans votre studio',
+      trainingLabel: 'Aperçu de la formation',
+      trainingClip1: 'Extrait 01',
+      trainingClip2: 'Extrait 02',
     },
     why: {
       title: 'Pourquoi les studios réservent Jamie',
