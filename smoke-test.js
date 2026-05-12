@@ -64,11 +64,14 @@ removedHeroOverlayTexts.forEach((text) => {
   assert(!css.includes(text), `Removed hero overlay text found in styles.css: ${text}`);
 });
 assert(
-  html.includes('data-i18n="hero.instagramLabel"') || html.includes('Follow @jamieelalouf') || html.includes('Instagram @jamieelalouf'),
+  html.includes('data-i18n="hero.instagramLabel"') || html.includes('@jamieelalouf') || html.includes('Instagram @jamieelalouf'),
   'Hero Instagram badge marker/text is missing from index.html.'
 );
-assert(js.includes("instagramLabel: 'Follow @jamieelalouf'"), 'English hero.instagramLabel translation is missing from app.js.');
-assert(js.includes("instagramLabel: 'Suivre @jamieelalouf'"), 'French hero.instagramLabel translation is missing from app.js.');
+assert(js.includes("instagramLabel: '@jamieelalouf'"), "hero.instagramLabel translation '@jamieelalouf' is missing from app.js.");
+assert(!html.includes('Follow @jamieelalouf'), 'Old English hero Instagram badge text must be absent from index.html.');
+assert(!html.includes('Suivre @jamieelalouf'), 'Old French hero Instagram badge text must be absent from index.html.');
+assert(!js.includes('Follow @jamieelalouf'), 'Old English hero Instagram badge text must be absent from app.js.');
+assert(!js.includes('Suivre @jamieelalouf'), 'Old French hero Instagram badge text must be absent from app.js.');
 
 const mailtoClarificationEn =
   'Clicking Send opens your email app with a prefilled message to Jamie. You must press send there to finish.';
