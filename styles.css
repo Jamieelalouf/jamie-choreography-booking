@@ -236,6 +236,7 @@ span {
 }
 
 .btn {
+  position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -245,11 +246,15 @@ span {
   text-decoration: none;
   cursor: pointer;
   border: 1px solid transparent;
-  transition: transform 180ms ease, box-shadow 180ms ease, background 180ms ease;
+  transition: transform 180ms ease, box-shadow 180ms ease, background 180ms ease, border-color 180ms ease;
 }
 
 .btn:hover {
   transform: translateY(-2px);
+}
+
+.btn:active {
+  transform: translateY(0);
 }
 
 .btn-solid {
@@ -279,6 +284,11 @@ span {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+html.js-enabled .hero-visual {
+  animation: heroFloat 13s ease-in-out infinite;
+  transform-origin: 52% 50%;
 }
 
 .hero-frame {
@@ -365,6 +375,58 @@ span {
   line-height: 1.32;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.28);
   backdrop-filter: blur(5px);
+}
+
+.hero-copy h1 span {
+  display: block;
+}
+
+html.js-enabled .hero-copy .kicker,
+html.js-enabled .hero-copy h1 span,
+html.js-enabled .hero-copy .lead,
+html.js-enabled .hero-copy .hero-cta {
+  opacity: 0;
+  transform: translate3d(0, 16px, 0);
+}
+
+html.js-enabled.hero-ready .hero-copy .kicker {
+  animation: heroRiseIn 560ms cubic-bezier(0.2, 0.7, 0.2, 1) 80ms both;
+}
+
+html.js-enabled.hero-ready .hero-copy h1 span:nth-child(1) {
+  animation: heroLineIn 560ms cubic-bezier(0.18, 0.76, 0.24, 1) 130ms both;
+}
+
+html.js-enabled.hero-ready .hero-copy h1 span:nth-child(2) {
+  animation: heroLineIn 560ms cubic-bezier(0.18, 0.76, 0.24, 1) 220ms both;
+}
+
+html.js-enabled.hero-ready .hero-copy h1 span:nth-child(3) {
+  animation: heroLineIn 560ms cubic-bezier(0.18, 0.76, 0.24, 1) 310ms both;
+}
+
+html.js-enabled.hero-ready .hero-copy .lead {
+  animation: heroRiseIn 560ms cubic-bezier(0.2, 0.7, 0.2, 1) 380ms both;
+}
+
+html.js-enabled.hero-ready .hero-copy .hero-cta {
+  animation: heroRiseIn 560ms cubic-bezier(0.2, 0.7, 0.2, 1) 450ms both;
+}
+
+.hero-cta .btn-solid::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(110deg, transparent 0%, rgba(255, 255, 255, 0.48) 45%, transparent 72%);
+  transform: translateX(-170%);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.hero-cta .btn-solid:hover::after,
+.hero-cta .btn-solid:focus-visible::after {
+  animation: ctaShine 820ms ease-out 1;
 }
 
 .orb {
@@ -680,6 +742,31 @@ span {
   box-shadow: 0 12px 30px rgba(19, 26, 39, 0.12);
 }
 
+.service-card,
+.price-card,
+.workshop-card,
+.lab-card,
+.proof-card,
+.card {
+  transition: transform 220ms ease, box-shadow 220ms ease, border-color 220ms ease;
+}
+
+.service-card:hover,
+.price-card:hover,
+.workshop-card:hover,
+.lab-card:hover,
+.proof-card:hover,
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 14px 32px rgba(16, 23, 36, 0.14);
+}
+
+.service-card:hover,
+.workshop-card:hover,
+.lab-card:hover {
+  border-color: rgba(115, 139, 186, 0.34);
+}
+
 .marker {
   font-size: 0.74rem;
   letter-spacing: 0.18em;
@@ -897,13 +984,21 @@ select {
 
 .reveal {
   opacity: 1;
-  transform: translateY(0);
-  transition: opacity 420ms ease, transform 420ms ease;
+  transform: none;
 }
 
-.reveal.in-view {
+html.js-enabled .reveal {
+  transition: opacity 540ms cubic-bezier(0.2, 0.65, 0.2, 1), transform 540ms cubic-bezier(0.2, 0.65, 0.2, 1);
+}
+
+html.js-enabled .reveal:not(.in-view) {
   opacity: 1;
-  transform: translateY(0);
+  transform: translate3d(0, 10px, 0);
+}
+
+html.js-enabled .reveal.in-view {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
 }
 
 .reveal-delay-1 {
@@ -912,6 +1007,73 @@ select {
 
 .reveal-delay-2 {
   transition-delay: 180ms;
+}
+
+@keyframes heroLineIn {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 20px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes heroRiseIn {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 14px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes heroFloat {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) rotate(0deg);
+  }
+  50% {
+    transform: translate3d(0, -7px, 0) rotate(-0.55deg);
+  }
+}
+
+@keyframes ctaShine {
+  0% {
+    transform: translateX(-170%);
+    opacity: 0;
+  }
+  20% {
+    opacity: 0.62;
+  }
+  100% {
+    transform: translateX(170%);
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+
+  html.js-enabled .reveal,
+  html.js-enabled .reveal:not(.in-view),
+  html.js-enabled .reveal.in-view,
+  html.js-enabled .hero-copy .kicker,
+  html.js-enabled .hero-copy h1 span,
+  html.js-enabled .hero-copy .lead,
+  html.js-enabled .hero-copy .hero-cta {
+    opacity: 1 !important;
+    transform: none !important;
+  }
 }
 
 @media (max-width: 920px) {

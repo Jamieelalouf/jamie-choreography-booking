@@ -1,3 +1,5 @@
+document.documentElement.classList.add('js-enabled');
+
 const serviceSelect = document.getElementById('serviceType');
 const dancerInput = document.getElementById('dancerCount');
 const estimateBtn = document.getElementById('estimateBtn');
@@ -458,7 +460,7 @@ navLinks?.querySelectorAll('a').forEach((link) => {
 
 const navAnchors = document.querySelectorAll('.nav-links a');
 const sections = [...navAnchors].map((a) => document.querySelector(a.getAttribute('href'))).filter(Boolean);
-if (sections.length) {
+if (sections.length && 'IntersectionObserver' in window) {
   const sectionObserver = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
@@ -476,18 +478,22 @@ if (sections.length) {
 
 const revealItems = document.querySelectorAll('.reveal');
 if (revealItems.length) {
-  const revealObserver = new IntersectionObserver(
-    (entries, observer) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('in-view');
-          observer.unobserve(entry.target);
-        }
-      });
-    },
-    { threshold: 0.16 }
-  );
-  revealItems.forEach((item) => revealObserver.observe(item));
+  if ('IntersectionObserver' in window) {
+    const revealObserver = new IntersectionObserver(
+      (entries, observer) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('in-view');
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.16 }
+    );
+    revealItems.forEach((item) => revealObserver.observe(item));
+  } else {
+    revealItems.forEach((item) => item.classList.add('in-view'));
+  }
 }
 
 window.addEventListener('scroll', () => {
@@ -496,5 +502,9 @@ window.addEventListener('scroll', () => {
 });
 
 applyTranslations();
+
+window.requestAnimationFrame(() => {
+  document.documentElement.classList.add('hero-ready');
+});
 
 export { getEstimate, translations };

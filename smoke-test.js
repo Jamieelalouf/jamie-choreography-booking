@@ -117,6 +117,13 @@ assert(html.includes('data-lang="en"') && html.includes('data-lang="fr"'), 'EN/F
 assert(js.includes('const translations =') && js.includes('fr:'), 'Translations object must include fr namespace.');
 assert(js.includes('document.documentElement.lang = currentLanguage'), 'Language application must update document.documentElement.lang.');
 assert(js.includes("localStorage.getItem('jamie-language')") && js.includes("localStorage.setItem('jamie-language'"), 'Language persistence in localStorage is missing.');
+assert(css.includes('@media (prefers-reduced-motion: reduce)'), 'styles.css must include prefers-reduced-motion guardrails.');
+assert(js.includes("document.documentElement.classList.add('js-enabled')"), 'app.js must add js-enabled to <html>.');
+assert(css.includes('html.js-enabled .reveal:not(.in-view)'), 'styles.css must guard reveal hidden state behind html.js-enabled.');
+assert(
+  css.includes('@keyframes heroLineIn') || css.includes('@keyframes heroRiseIn') || css.includes('@keyframes heroFloat'),
+  'styles.css must include at least one hero animation keyframes marker.'
+);
 
 assert(html.includes('assets/jamie-portrait.jpg'), 'index.html must reference assets/jamie-portrait.jpg.');
 
