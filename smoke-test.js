@@ -92,7 +92,7 @@ const bookingIndex = html.indexOf('id="booking"');
 assert(workshopsIndex !== -1, 'Could not find workshops section.');
 assert(labsIndex !== -1, 'Could not find vision-labs section.');
 assert(bookingIndex !== -1, 'Could not find booking section.');
-assert(workshopsIndex < labsIndex && labsIndex < bookingIndex, 'Vision Labs must appear after Workshops and before Booking in index.html.');
+assert(workshopsIndex < labsIndex && labsIndex < bookingIndex, 'VISION Labs must appear after Workshops and before Booking in index.html.');
 
 const requiredRates = [
   '$750',
@@ -120,6 +120,18 @@ forbiddenStrings.forEach((text) => {
   assert(!css.includes(text), `Forbidden legacy string found in styles.css: ${text}`);
 });
 
+const wrongBrandVisibleStrings = [
+  'Vision Labs',
+  'In-Studio Vision Labs',
+  'Vision Labs training',
+  'Vision Labs-style',
+];
+
+wrongBrandVisibleStrings.forEach((text) => {
+  assert(!html.includes(text), `Wrong brand casing found in index.html visible content: ${text}`);
+  assert(!js.includes(text), `Wrong brand casing found in app.js visible translations/content: ${text}`);
+});
+
 const bookingStrings = [
   'Name',
   'Studio name',
@@ -128,7 +140,7 @@ const bookingStrings = [
   'Competitive choreography',
   'Studio workshop',
   'Team coaching',
-  'In-Studio Vision Labs',
+  'In-Studio VISION Labs',
   'Not sure yet',
   'Beginner',
   'Intermediate',
