@@ -286,6 +286,19 @@ span {
   align-items: center;
 }
 
+.hero-frame-link {
+  position: relative;
+  display: inline-block;
+  color: inherit;
+  text-decoration: none;
+  border-radius: 30px;
+}
+
+.hero-frame-link:focus-visible {
+  outline: 2px solid rgba(232, 240, 255, 0.95);
+  outline-offset: 6px;
+}
+
 html.js-enabled .hero-visual {
   animation: heroFloat 13s ease-in-out infinite;
   transform-origin: 52% 50%;
@@ -342,6 +355,34 @@ html.js-enabled .hero-visual {
   transform-origin: center;
   filter: saturate(0.96) contrast(1.03);
   user-select: none;
+}
+
+.hero-instagram-badge {
+  position: absolute;
+  right: 14px;
+  bottom: 14px;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  background: rgba(8, 10, 15, 0.62);
+  backdrop-filter: blur(7px);
+  color: #f3f6fc;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  line-height: 1.2;
+  transition: border-color 200ms ease, background-color 200ms ease, transform 200ms ease;
+}
+
+.hero-frame-link:hover .hero-instagram-badge,
+.hero-frame-link:focus-visible .hero-instagram-badge {
+  border-color: rgba(255, 255, 255, 0.44);
+  background: rgba(10, 13, 19, 0.76);
+  transform: translateY(-1px);
 }
 
 

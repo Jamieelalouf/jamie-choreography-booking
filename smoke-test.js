@@ -24,6 +24,7 @@ requiredFiles.forEach((rel) => {
 const html = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
 const css = fs.readFileSync(path.join(root, 'styles.css'), 'utf8');
 const js = fs.readFileSync(path.join(root, 'app.js'), 'utf8');
+const personalInstagramUrl = 'https://www.instagram.com/jamieelalouf/';
 const instagramUrl1 = 'https://www.instagram.com/p/DXXwNOaj_-1/?hl=en';
 const instagramUrl2 = 'https://www.instagram.com/p/DXPmW03jrC1/?hl=en&img_index=3';
 
@@ -34,7 +35,7 @@ assert(parseCheck.status === 0, `app.js failed parse check: ${parseCheck.stderr 
   assert(html.includes(needle), `index.html missing required marker: ${needle}`);
 });
 
-[instagramUrl1, instagramUrl2].forEach((url) => {
+[personalInstagramUrl, instagramUrl1, instagramUrl2].forEach((url) => {
   assert(html.includes(url), `index.html missing required Instagram URL: ${url}`);
 });
 
@@ -62,6 +63,12 @@ removedHeroOverlayTexts.forEach((text) => {
   assert(!js.includes(text), `Removed hero overlay text found in app.js: ${text}`);
   assert(!css.includes(text), `Removed hero overlay text found in styles.css: ${text}`);
 });
+assert(
+  html.includes('data-i18n="hero.instagramLabel"') || html.includes('Follow @jamieelalouf') || html.includes('Instagram @jamieelalouf'),
+  'Hero Instagram badge marker/text is missing from index.html.'
+);
+assert(js.includes("instagramLabel: 'Follow @jamieelalouf'"), 'English hero.instagramLabel translation is missing from app.js.');
+assert(js.includes("instagramLabel: 'Suivre @jamieelalouf'"), 'French hero.instagramLabel translation is missing from app.js.');
 
 const mailtoClarificationEn =
   'Clicking Send opens your email app with a prefilled message to Jamie. You must press send there to finish.';
@@ -161,10 +168,10 @@ bannedPhrases.forEach((phrase) => {
 
 const externalUrlRegex = /https?:\/\/[^\s"'<>)]*/gi;
 const htmlExternalUrls = html.match(externalUrlRegex) || [];
-const allowedExternalUrls = new Set([instagramUrl1, instagramUrl2]);
+const allowedExternalUrls = new Set([personalInstagramUrl, instagramUrl1, instagramUrl2]);
 const unexpectedHtmlExternalUrls = htmlExternalUrls.filter((url) => !allowedExternalUrls.has(url));
 assert(unexpectedHtmlExternalUrls.length === 0, `Unexpected external http(s) URL found in index.html: ${unexpectedHtmlExternalUrls.join(', ')}`);
-assert(htmlExternalUrls.length === allowedExternalUrls.size, 'index.html must include exactly the two allowed Instagram URLs and no other external URLs.');
+assert(htmlExternalUrls.length === allowedExternalUrls.size, 'index.html must include exactly the three allowed Instagram URLs and no other external URLs.');
 assert(!externalUrlRegex.test(css), 'External http(s) URL found in styles.css.');
 assert(!externalUrlRegex.test(js), 'External http(s) URL found in app.js.');
 
