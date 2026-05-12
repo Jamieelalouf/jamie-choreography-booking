@@ -27,16 +27,29 @@ const js = fs.readFileSync(path.join(root, 'app.js'), 'utf8');
 const parseCheck = spawnSync(process.execPath, ['--check', path.join(root, 'app.js')], { encoding: 'utf8' });
 assert(parseCheck.status === 0, `app.js failed parse check: ${parseCheck.stderr || parseCheck.stdout}`);
 
-['id="services"', 'id="vision-labs"', 'id="process"', 'id="booking"', 'href="WORKBOOK_LINK_HERE"'].forEach((needle) => {
+['id="services"', 'id="rates"', 'id="workshops"', 'id="vision-labs"', 'id="booking"', 'href="WORKBOOK_LINK_HERE"'].forEach((needle) => {
   assert(html.includes(needle), `index.html missing required marker: ${needle}`);
 });
 
 [
-  'More than choreography.',
-  'A complete training experience for serious dancers.',
+  'Train sharper.',
+  'Perform stronger.',
+  'Compete different.',
 ].forEach((text) => {
   assert(html.includes(text), `Hero copy missing: ${text}`);
 });
+
+assert(!html.includes('id="process"'), 'Process section should be removed.');
+assert(!html.includes('How booking works'), '"How booking works" should be absent.');
+assert(!html.includes('Why studios book Jamie'), '"Why studios book Jamie" should be absent.');
+
+const workshopsIndex = html.indexOf('id="workshops"');
+const labsIndex = html.indexOf('id="vision-labs"');
+const bookingIndex = html.indexOf('id="booking"');
+assert(workshopsIndex !== -1, 'Could not find workshops section.');
+assert(labsIndex !== -1, 'Could not find vision-labs section.');
+assert(bookingIndex !== -1, 'Could not find booking section.');
+assert(workshopsIndex < labsIndex && labsIndex < bookingIndex, 'Vision Labs must appear after Workshops and before Booking in index.html.');
 
 const requiredRates = [
   '$750',

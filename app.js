@@ -27,8 +27,9 @@ const translations = {
     nav: { menu: 'Menu', about: 'About', services: 'Services', rates: 'Rates', labs: 'Labs', booking: 'Booking' },
     hero: {
       kicker: 'CHOREOGRAPHY · WORKSHOPS · TEAM COACHING · VISION LABS',
-      headlineLine1: 'More than choreography.',
-      headlineLine2: 'A complete training experience for serious dancers.',
+      headlineLine1: 'Train sharper.',
+      headlineLine2: 'Perform stronger.',
+      headlineLine3: 'Compete different.',
       body: 'Book Jamie for competitive choreography, high-impact hip-hop workshops, team coaching, or an in-studio Vision Labs experience combining movement, mindset, theory, and performance development.',
       ctaQuote: 'Request a quote',
       ctaServices: 'Explore services',
@@ -179,8 +180,9 @@ const translations = {
     nav: { menu: 'Menu', about: 'À propos', services: 'Services', rates: 'Tarifs', labs: 'Labs', booking: 'Réservation' },
     hero: {
       kicker: 'CHORÉGRAPHIE · ATELIERS · COACHING D’ÉQUIPE · VISION LABS',
-      headlineLine1: 'Plus que de la chorégraphie.',
-      headlineLine2: 'Une expérience d’entraînement complète pour des danseurs sérieux.',
+      headlineLine1: 'Entraîne-toi plus précis.',
+      headlineLine2: 'Performe plus fort.',
+      headlineLine3: 'Compétitionne autrement.',
       body: 'Réservez Jamie pour de la chorégraphie compétitive, des ateliers hip-hop percutants, du coaching d’équipe, ou une expérience Vision Labs en studio qui combine mouvement, mindset, théorie et développement de performance.',
       ctaQuote: 'Demander un devis',
       ctaServices: 'Voir les services',
