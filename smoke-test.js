@@ -52,6 +52,26 @@ assert(parseCheck.status === 0, `app.js failed parse check: ${parseCheck.stderr 
   assert(html.includes(text), `Hero copy missing: ${text}`);
 });
 
+const removedHeroOverlayTexts = [
+  'Professional dancer · Choreographer · Founder of VISION',
+  'Studio-ready choreography + dancer development',
+];
+
+removedHeroOverlayTexts.forEach((text) => {
+  assert(!html.includes(text), `Removed hero overlay text found in index.html: ${text}`);
+  assert(!js.includes(text), `Removed hero overlay text found in app.js: ${text}`);
+  assert(!css.includes(text), `Removed hero overlay text found in styles.css: ${text}`);
+});
+
+const mailtoClarificationEn =
+  'Clicking Send opens your email app with a prefilled message to Jamie. You must press send there to finish.';
+const mailtoClarificationFr =
+  'En cliquant sur Envoyer, votre application courriel s’ouvre avec un message prérempli à Jamie. Vous devez cliquer sur envoyer dans cette application pour terminer.';
+
+assert(html.includes(mailtoClarificationEn), 'Clarified mailto booking note is missing from index.html.');
+assert(js.includes(mailtoClarificationEn), 'Clarified English mailto booking note is missing from app.js translations.');
+assert(js.includes(mailtoClarificationFr), 'Clarified French mailto booking note is missing from app.js translations.');
+
 assert(!html.includes('id="process"'), 'Process section should be removed.');
 assert(!html.includes('How booking works'), '"How booking works" should be absent.');
 assert(!html.includes('Why studios book Jamie'), '"Why studios book Jamie" should be absent.');
