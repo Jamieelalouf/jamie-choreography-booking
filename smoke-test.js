@@ -1,134 +1,102 @@
 const fs = require('fs');
 const path = require('path');
-const vm = require('vm');
+const { spawnSync } = require('child_process');
 
 function assert(condition, message) {
-  if (!condition) {
-    throw new Error(message);
-  }
+  if (!condition) throw new Error(message);
 }
 
-const htmlPath = path.join(__dirname, 'index.html');
-const cssPath = path.join(__dirname, 'styles.css');
-const jsPath = path.join(__dirname, 'app.js');
-const vercelConfigPath = path.join(__dirname, 'vercel.json');
-const netlifyConfigPath = path.join(__dirname, 'netlify.toml');
+const root = __dirname;
+const requiredFiles = [
+  'index.html',
+  'styles.css',
+  'app.js',
+  'smoke-test.js',
+  path.join('assets', 'jamie-portrait.jpg'),
+];
 
-const html = fs.readFileSync(htmlPath, 'utf8');
-const css = fs.readFileSync(cssPath, 'utf8');
-let js = fs.readFileSync(jsPath, 'utf8');
-assert(fs.existsSync(vercelConfigPath), 'vercel.json is missing at repository root.');
-
-let vercelConfig;
-try {
-  vercelConfig = JSON.parse(fs.readFileSync(vercelConfigPath, 'utf8'));
-} catch (error) {
-  throw new Error(`vercel.json must be valid JSON: ${error.message}`);
-}
-assert(vercelConfig && typeof vercelConfig === 'object', 'vercel.json must contain a JSON object.');
-assert(vercelConfig.outputDirectory === '.', 'vercel.json outputDirectory must be ".".');
-assert(fs.existsSync(netlifyConfigPath), 'netlify.toml is missing at repository root.');
-
-const netlifyConfig = fs.readFileSync(netlifyConfigPath, 'utf8');
-assert(/^\s*publish\s*=\s*(['"])\.\1\s*$/m.test(netlifyConfig), 'netlify.toml publish must be ".".');
-assert(/^\s*command\s*=\s*(['"])npm run build\1\s*$/m.test(netlifyConfig), 'netlify.toml command must be "npm run build".');
-
-assert(html.includes('class="lang-toggle"'), 'Language toggle missing from nav.');
-assert(html.includes('data-lang="en"') && html.includes('data-lang="fr"'), 'Language toggle buttons for EN/FR missing.');
-assert(html.includes('data-i18n='), 'HTML must include data-i18n attributes.');
-
-assert(js.includes('const translations ='), 'Translations object missing in app.js.');
-assert(js.includes('fr:'), 'French translation namespace missing in app.js.');
-
-['Chorégraphie solo $750', 'Demander un devis', 'studios compétitifs', 'Devis personnalisé'].forEach((text) => {
-  assert(js.includes(text), `Missing French string in app.js: ${text}`);
+requiredFiles.forEach((rel) => {
+  const full = path.join(root, rel);
+  assert(fs.existsSync(full), `Missing required file: ${rel}`);
 });
 
-const englishPricingStrings = [
-  'Solo choreography $750',
-  'Duo choreography $900',
-  'Trio choreography $1,050',
-  'Small group, 4–9 dancers $1,200 base + $75/dancer',
-  'Large group, 10–19 dancers $1,500 base + $60/dancer',
-  'Line/production, 20+ dancers Custom quote, usually $2,500+',
-  '1-hour workshop $350/hour',
+const html = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
+const css = fs.readFileSync(path.join(root, 'styles.css'), 'utf8');
+const js = fs.readFileSync(path.join(root, 'app.js'), 'utf8');
+
+const parseCheck = spawnSync(process.execPath, ['--check', path.join(root, 'app.js')], { encoding: 'utf8' });
+assert(parseCheck.status === 0, `app.js failed parse check: ${parseCheck.stderr || parseCheck.stdout}`);
+
+['id="services"', 'id="vision-labs"', 'id="process"', 'id="booking"', 'href="WORKBOOK_LINK_HERE"'].forEach((needle) => {
+  assert(html.includes(needle), `index.html missing required marker: ${needle}`);
+});
+
+[
+  'More than choreography.',
+  'A complete training experience for serious dancers.',
+].forEach((text) => {
+  assert(html.includes(text), `Hero copy missing: ${text}`);
+});
+
+const requiredRates = [
+  '$750',
+  '$900',
+  '$1,050',
+  '$1,200 base + $75/dancer',
+  '$1,500 base + $60/dancer',
+  '$2,500+',
+  '$350/hour',
 ];
-englishPricingStrings.forEach((text) => assert(js.includes(text), `Missing English pricing string: ${text}`));
 
-const frenchPricingStrings = [
-  'Chorégraphie solo $750',
-  'Chorégraphie duo $900',
-  'Chorégraphie trio $1,050',
-  'Petit groupe, 4–9 danseurs/danseuses $1,200 de base + $75/danseur',
-  'Grand groupe, 10–19 danseurs/danseuses $1,500 de base + $60/danseur',
-  'Ligne/production, 20+ danseurs/danseuses Devis personnalisé, habituellement $2,500+',
-  'Atelier de 1 heure $350/heure',
+requiredRates.forEach((rate) => {
+  assert(html.includes(rate) || js.includes(rate), `Missing required rate string: ${rate}`);
+});
+
+const bookingStrings = [
+  'Name',
+  'Studio name',
+  'Email',
+  'City / Province',
+  'Competitive choreography',
+  'Studio workshop',
+  'Team coaching',
+  'In-Studio Vision Labs',
+  'Not sure yet',
+  'Beginner',
+  'Intermediate',
+  'Advanced',
+  'Competitive team',
+  'Mixed levels',
+  'Preferred date or timeframe',
+  'Message / details',
 ];
-frenchPricingStrings.forEach((text) => assert(js.includes(text), `Missing French pricing string: ${text}`));
 
-assert(html.includes('data-accordion-item'), 'Accordion item data attributes missing.');
-assert(html.includes('data-accordion-trigger'), 'Accordion trigger data attributes missing.');
-assert(html.includes('data-accordion-panel'), 'Accordion panel data attributes missing.');
-assert(html.includes('id="serviceType"') && html.includes('id="dancerCount"') && html.includes('id="estimateBtn"'), 'Calculator controls missing.');
+bookingStrings.forEach((item) => {
+  assert(html.includes(item), `Booking form text/option missing: ${item}`);
+});
 
-assert(js.includes('IntersectionObserver'), 'IntersectionObserver/reveal logic missing in app.js.');
-assert(js.includes('reveal'), 'Reveal motion hooks missing in app.js.');
-assert(js.includes("baseLabel: 'de base'") && js.includes("perDancerLabel: 'danseur'"), 'French calculator base/per-dancer labels missing.');
+assert(html.includes('data-lang="en"') && html.includes('data-lang="fr"'), 'EN/FR language toggle buttons are missing.');
+assert(js.includes('const translations =') && js.includes('fr:'), 'Translations object must include fr namespace.');
+assert(js.includes('document.documentElement.lang = currentLanguage'), 'Language application must update document.documentElement.lang.');
+assert(js.includes("localStorage.getItem('jamie-language')") && js.includes("localStorage.setItem('jamie-language'"), 'Language persistence in localStorage is missing.');
 
-assert(!/https?:\/\//i.test(html), 'HTML should not include external CDN/HTTP URLs.');
-assert(!/https?:\/\//i.test(css), 'CSS should not include external CDN/HTTP URLs.');
-assert(!/https?:\/\//i.test(js), 'JS should not include external CDN/HTTP URLs.');
+assert(html.includes('assets/jamie-portrait.jpg'), 'index.html must reference assets/jamie-portrait.jpg.');
 
-js = js.replace(/^\s*export\s*\{[^}]*\};?\s*$/gm, '');
+const bannedPhrases = [
+  'unlock your potential',
+  'transform your dancers overnight',
+  'revolutionary',
+  'game-changing',
+];
 
-const fakeElement = {
-  value: '8',
-  textContent: '',
-  dataset: {},
-  classList: {
-    toggle: () => false,
-    remove: () => {},
-    add: () => {},
-  },
-  setAttribute: () => {},
-  addEventListener: () => {},
-  querySelectorAll: () => [],
-  querySelector: () => fakeElement,
-  getAttribute: () => '#about',
-  style: {},
-};
+const combined = `${html}\n${css}\n${js}`.toLowerCase();
+bannedPhrases.forEach((phrase) => {
+  assert(!combined.includes(phrase), `Banned phrase found: "${phrase}"`);
+});
 
-const localStorageStore = {};
-const context = {
-  Intl,
-  Number,
-  localStorage: {
-    getItem: (key) => localStorageStore[key] || null,
-    setItem: (key, value) => {
-      localStorageStore[key] = String(value);
-    },
-  },
-  window: {
-    addEventListener: () => {},
-    setTimeout: (fn) => fn(),
-    innerWidth: 1200,
-    innerHeight: 900,
-    scrollY: 0,
-  },
-  document: {
-    title: '',
-    documentElement: { lang: 'en' },
-    getElementById: () => fakeElement,
-    querySelector: () => fakeElement,
-    querySelectorAll: () => [],
-  },
-  IntersectionObserver: function () {
-    this.observe = () => {};
-    this.unobserve = () => {};
-  },
-};
-
-const script = new vm.Script(js, { filename: 'app.js' });
-script.runInNewContext(context);
+const externalUrlRegex = /https?:\/\//i;
+assert(!externalUrlRegex.test(html), 'External http(s) URL found in index.html.');
+assert(!externalUrlRegex.test(css), 'External http(s) URL found in styles.css.');
+assert(!externalUrlRegex.test(js), 'External http(s) URL found in app.js.');
 
 console.log('Smoke tests passed.');

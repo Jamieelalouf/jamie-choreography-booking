@@ -7,6 +7,7 @@ const navLinks = document.getElementById('nav-links');
 const siteHeader = document.querySelector('.site-header');
 const languageButtons = document.querySelectorAll('.lang-btn');
 const bookingEmail = document.getElementById('bookingEmail');
+const bookingForm = document.getElementById('booking-form');
 const descriptionMeta = document.querySelector('meta[name="description"]');
 
 const pricing = {
@@ -21,55 +22,83 @@ const pricing = {
 
 const translations = {
   en: {
-    pageTitle: 'Book Jamie | Competitive Choreography & Workshops',
-    pageDescription: 'Book Jamie for competitive choreography and dance workshops for your studio.',
-    nav: { menu: 'Menu', about: 'About', why: 'Why Book Me', rates: 'Rates', workshops: 'Workshops', booking: 'Booking' },
+    pageTitle: 'Book Jamie | Choreography, Workshops, Team Coaching & Vision Labs',
+    pageDescription: 'Book Jamie for competitive choreography, workshops, team coaching, and In-Studio Vision Labs.',
+    nav: { menu: 'Menu', about: 'About', services: 'Services', rates: 'Rates', labs: 'Labs', booking: 'Booking' },
     hero: {
-      kicker: 'Competitive choreography + studio workshops',
-      headline: 'Build routines that',
-      accent: 'own the stage.',
-      body: 'Jamie partners with competitive studios to craft sharp, high-impact hip-hop choreography, level up performance quality, and run rehearsals with clear, pro-level structure.',
+      kicker: 'CHOREOGRAPHY · WORKSHOPS · TEAM COACHING · VISION LABS',
+      headlineLine1: 'More than choreography.',
+      headlineLine2: 'A complete training experience for serious dancers.',
+      body: 'Book Jamie for competitive choreography, high-impact hip-hop workshops, team coaching, or an in-studio Vision Labs experience combining movement, mindset, theory, and performance development.',
       ctaQuote: 'Request a quote',
+      ctaServices: 'Explore services',
       ctaRates: 'See rates',
-      frame: 'Premium choreography direction',
-    },
-    gallery: {
-      title: 'Gallery',
-      intro: 'Replace with rehearsal and stage photography from your studio collaborations.',
-      featuredTitle: 'Featured Rehearsal Session',
-      stageTitle: 'Competition Stage Moment',
-      workshopTitle: 'Workshop Team Training',
-      note: 'Replace with rehearsal photo',
+      frame: 'Professional dancer · Choreographer · Founder of VISION',
+      floatCard: 'Studio-ready choreography + dancer development',
     },
     about: {
       title: 'About Jamie',
-      body1: 'Jamie is a Montreal-based professional hip-hop dancer and choreographer focused on competitive teams. He has been a hip-hop dancer since childhood and builds routines that look premium on stage while staying practical for real studio rehearsal timelines.',
-      body2: 'As the founder of VISION Dance Camp, Jamie brings both creative direction and operational clarity, helping studio owners, directors, and dancers align around a stronger final result.',
+      body: 'Jamie Elalouf is a Montreal-based professional hip-hop dancer, choreographer, and founder of VISION Dance Camp. He works with studios and competitive teams to create sharp choreography, strengthen performance quality, and help dancers understand how to train with more intention. His approach blends movement, musicality, mindset, and structure — giving dancers not just choreography to perform, but tools they can carry into every class, rehearsal, and stage opportunity.',
     },
-    proof: { 1: 'Professional dancer', 2: 'Founder of VISION Dance Camp', 3: 'Competitive choreography', 4: 'Studio workshops' },
+    proof: { 1: 'Professional dancer', 2: 'Founder of VISION', 3: 'Choreography + workshops', 4: 'Vision Labs training' },
+    services: {
+      title: 'Ways to work with Jamie',
+      card1Title: 'Competitive Choreography',
+      card1Body: 'Custom choreography for solos, duos, trios, small groups, and competitive teams — built with musicality, texture, staging, and performance quality in mind.',
+      card1GoodFor: 'Good for: Solos, duos, trios, groups, full competitive routines',
+      card2Title: 'Studio Workshops',
+      card2Body: 'High-impact hip-hop workshops focused on grooves, textures, musicality, performance, and clean execution.',
+      card2GoodFor: 'Good for: Drop-in workshops, intensives, guest classes, summer training',
+      card3Title: 'Competitive Team Coaching',
+      card3Body: 'Focused coaching sessions to clean routines, improve transitions, sharpen performance quality, and prepare dancers for competition season.',
+      card3GoodFor: 'Good for: Full teams, pre-competition prep, cleaning sessions, performance direction',
+      card4Title: 'In-Studio Vision Labs',
+      card4Body: 'A curated training experience combining dance, theory, mindset, reflection, and workbook exercises to help dancers understand how to train, think, and perform at the next level.',
+      card4GoodFor: 'Good for: Serious students, competitive teams, mindset training, dancer development',
+      cta: 'Not sure what your studio needs? Request a quote and I’ll recommend the best format.',
+    },
+    labs: {
+      title: 'In-Studio Vision Labs',
+      subtitle: 'A curated dancer development experience for studios that want more than a regular workshop.',
+      body: 'Vision Labs is a training experience built around both movement and mindset. Dancers spend time learning choreography, exploring performance quality, and reflecting through guided theory and workbook exercises. The goal is to help students understand how they train, how they perform, and what they need to improve to reach the next level.',
+      card1Title: '50% movement',
+      card1Body: 'Choreography, grooves, performance quality, musicality, and execution.',
+      card2Title: '50% theory',
+      card2Body: 'Guided conversations, reflection prompts, workbook exercises, and training concepts.',
+      card3Title: 'Built for growth',
+      card3Body: 'Dancers leave with more clarity, stronger intention, and a better understanding of how to improve.',
+      workbook: 'View sample workbook',
+      cta: 'Bring Vision Labs to your studio',
+    },
     why: {
-      title: 'Why book me',
-      card1: 'Competitive-ready choreography',
-      card2: 'Musicality + performance coaching',
-      card3: 'Clear rehearsal structure',
-      card4: 'Studio-friendly communication',
-      card5: 'Dancers leave sharper',
+      title: 'Why studios book Jamie',
+      card1Title: 'Competitive-ready choreography',
+      card1Body: 'Routines built with staging, musicality, texture, and performance in mind.',
+      card2Title: 'Performance-first coaching',
+      card2Body: 'Dancers learn how to execute, not just memorize steps.',
+      card3Title: 'Clear rehearsal structure',
+      card3Body: 'Sessions are focused, organized, and easy for studio directors to follow.',
+      card4Title: 'Mindset + theory',
+      card4Body: 'Through Vision Labs-style training, dancers learn how to think about their growth.',
+      card5Title: 'Studio-friendly communication',
+      card5Body: 'Clear expectations, simple booking, and professional follow-up.',
+      card6Title: 'Dancers leave sharper',
+      card6Body: 'The goal is for students to leave with tools, not just choreography.',
     },
     rates: {
       title: 'Choreography rates',
-      intro: 'Custom quotes are available for your exact needs.',
-      solo: 'Solo choreography $750',
-      duo: 'Duo choreography $900',
-      trio: 'Trio choreography $1,050',
-      small: 'Small group, 4–9 dancers $1,200 base + $75/dancer',
-      smallBadge: 'Most popular',
-      large: 'Large group, 10–19 dancers $1,500 base + $60/dancer',
-      largeBadge: 'Best for competitive teams',
-      line: 'Line/production, 20+ dancers Custom quote, usually $2,500+',
+      intro: 'Custom quotes are available depending on routine length, group size, travel, and studio needs.',
+      solo: 'Solo choreography: $750',
+      duo: 'Duo choreography: $900',
+      trio: 'Trio choreography: $1,050',
+      small: 'Small group, 4–9 dancers: $1,200 base + $75/dancer',
+      large: 'Large group, 10–19 dancers: $1,500 base + $60/dancer',
+      line: 'Line / production, 20+ dancers: Custom quote, usually $2,500+',
+      note: 'Rates may vary depending on routine length, rehearsal format, travel, and additional coaching needs.',
     },
     calc: {
-      title: 'Premium quote tool',
-      body: 'Select a service and dancer count for a fast estimate. 20+ dancers returns custom quote messaging.',
+      title: 'Quick estimate',
+      body: 'Use this tool for a clean estimate range. Final quotes are confirmed after booking details are reviewed.',
       serviceLabel: 'Service type',
       dancerLabel: 'Dancer count',
       optionSolo: 'Solo',
@@ -90,90 +119,140 @@ const translations = {
       customAvailable: 'Custom quotes are available.',
     },
     workshops: {
-      title: 'Workshops',
-      intro: 'Built for studios wanting cleaner execution, stronger performance quality, and practical coaching frameworks.',
+      title: 'Workshops + team training',
+      intro: 'Book Jamie for focused hip-hop training, competitive team coaching, or studio intensives built around your dancers’ needs.',
       card1Title: '1-hour workshop $350/hour',
-      card1Body: 'Best for focused musicality, texture, and performance sessions with one team.',
+      card1Body: 'Best for focused training in musicality, texture, grooves, performance, or hip-hop foundations.',
       card2Title: '3+ hour studio intensive discounted package available',
-      card2Body: 'Best for studios running multi-team development blocks in one day.',
+      card2Body: 'Best for deeper training, multi-class development, or a half-day intensive.',
       card3Title: 'Competitive team coaching custom quote',
-      card3Body: 'Best for comp teams preparing full sets, transitions, and stage strategy.',
+      card3Body: 'Best for cleaning routines, improving transitions, sharpening performance, and preparing for competition season.',
+      card4Title: 'In-Studio Vision Labs custom quote',
+      card4Body: 'Best for studios that want a curated mix of dance training, theory, mindset, and workbook-based development.',
       cta: 'Request a quote',
     },
-    booking: {
-      title: 'Booking inquiry',
-      body: 'Ready to schedule choreography or workshops for your studio season?',
-      note: 'Include: Studio name, City, Number of dancers, Service needed, Ideal dates.',
-      cta: 'Email Jamie',
-      subject: 'Booking Inquiry for Jamie',
-      bodyTemplate: 'Hi Jamie,\n\nStudio name:\nCity:\nNumber of dancers:\nService needed:\nIdeal dates:\nAnything else:\n',
+    process: {
+      title: 'How booking works',
+      step1Title: 'Send a request',
+      step1Body: 'Tell me what you’re looking for, your studio location, dancer level, group size, and preferred dates.',
+      step2Title: 'Choose the right format',
+      step2Body: 'I’ll help recommend the best option: choreography, workshop, team coaching, or Vision Labs.',
+      step3Title: 'Confirm the details',
+      step3Body: 'We lock in the date, rate, schedule, and expectations.',
+      step4Title: 'Train with purpose',
+      step4Body: 'I come in with a clear plan so your dancers leave sharper, more confident, and more prepared.',
     },
-    faq: {
-      title: 'FAQ',
-      q1: 'Do you offer custom quotes?',
-      a1: 'Yes. Custom quotes are available for all projects.',
-      q2: 'What affects pricing?',
-      a2: 'Group size, routine complexity, timeline, and rehearsal format.',
-      q3: 'Do you travel?',
-      a3: 'Yes. Travel is available based on schedule and location.',
-      q4: 'How do we start?',
-      a4: 'Email your studio details, goals, dancer count, and target dates to begin.',
-      q5: 'Can you coach existing choreography?',
-      a5: 'Yes. Coaching sessions can refine existing choreography for cleaner execution and stronger performance.',
+    booking: {
+      ctaTitle: 'Ready to bring Jamie to your studio?',
+      ctaSubtitle: 'Whether you need choreography, workshops, team coaching, or a full Vision Labs-style training experience, send a request and I’ll help build the right format for your dancers.',
+      topCta: 'Request a quote',
+      topRates: 'View rates',
+      title: 'Request a quote',
+      name: 'Name',
+      studio: 'Studio name',
+      email: 'Email',
+      city: 'City / Province',
+      interest: 'What are you interested in?',
+      interest1: 'Competitive choreography',
+      interest2: 'Studio workshop',
+      interest3: 'Team coaching',
+      interest4: 'In-Studio Vision Labs',
+      interest5: 'Not sure yet',
+      dancers: 'Number of dancers',
+      level: 'Dancer level',
+      level1: 'Beginner',
+      level2: 'Intermediate',
+      level3: 'Advanced',
+      level4: 'Competitive team',
+      level5: 'Mixed levels',
+      date: 'Preferred date or timeframe',
+      message: 'Message / details',
+      send: 'Send request',
+      note: 'This form opens your email app and sends your request directly to Jamie.',
+      directEmail: 'Or email directly: jameselalouf@gmail.com',
+      subject: 'Booking Request for Jamie Elalouf',
     },
   },
   fr: {
-    pageTitle: 'Réserver Jamie | Chorégraphie compétitive et ateliers',
-    pageDescription: 'Réservez Jamie pour la chorégraphie compétitive et des ateliers de danse pour votre studio.',
-    nav: { menu: 'Menu', about: 'À propos', why: 'Pourquoi me réserver', rates: 'Tarifs', workshops: 'Ateliers', booking: 'Réservation' },
+    pageTitle: 'Réserver Jamie | Chorégraphie, ateliers, coaching d’équipe et Vision Labs',
+    pageDescription: 'Réservez Jamie pour la chorégraphie compétitive, les ateliers, le coaching d’équipe et les Vision Labs en studio.',
+    nav: { menu: 'Menu', about: 'À propos', services: 'Services', rates: 'Tarifs', labs: 'Labs', booking: 'Réservation' },
     hero: {
-      kicker: 'Chorégraphie compétitive + ateliers en studio',
-      headline: 'Créez des routines qui',
-      accent: 'dominent la scène.',
-      body: 'Jamie collabore avec des studios compétitifs pour créer des chorégraphies hip-hop précises et percutantes, hausser la qualité de performance et mener les répétitions avec une structure pro claire.',
+      kicker: 'CHORÉGRAPHIE · ATELIERS · COACHING D’ÉQUIPE · VISION LABS',
+      headlineLine1: 'Plus que de la chorégraphie.',
+      headlineLine2: 'Une expérience d’entraînement complète pour des danseurs sérieux.',
+      body: 'Réservez Jamie pour de la chorégraphie compétitive, des ateliers hip-hop percutants, du coaching d’équipe, ou une expérience Vision Labs en studio qui combine mouvement, mindset, théorie et développement de performance.',
       ctaQuote: 'Demander un devis',
+      ctaServices: 'Voir les services',
       ctaRates: 'Voir les tarifs',
-      frame: 'Direction chorégraphique premium',
-    },
-    gallery: {
-      title: 'Galerie',
-      intro: 'À remplacer par des photos de répétition et de scène de vos collaborations en studio.',
-      featuredTitle: 'Session de répétition en vedette',
-      stageTitle: 'Moment sur scène en compétition',
-      workshopTitle: 'Entraînement d’équipe en atelier',
-      note: 'À remplacer par une photo de répétition',
+      frame: 'Danseur professionnel · Chorégraphe · Fondateur de VISION',
+      floatCard: 'Chorégraphie studio + développement des danseurs',
     },
     about: {
       title: 'À propos de Jamie',
-      body1: 'Jamie est un danseur et chorégraphe hip-hop professionnel basé à Montréal, axé sur les équipes compétitives. Il danse le hip-hop depuis l’enfance et crée des routines premium sur scène, tout en restant réalistes pour les vrais horaires de répétition en studio.',
-      body2: 'Fondateur de VISION Dance Camp, Jamie combine direction créative et clarté opérationnelle pour aider les propriétaires de studio, les directions et les danseurs/danseuses à livrer un résultat final plus solide.',
+      body: 'Jamie Elalouf est un danseur hip-hop professionnel, chorégraphe et fondateur de VISION Dance Camp, basé à Montréal. Il travaille avec des studios et des équipes compétitives pour créer des chorégraphies précises, renforcer la qualité de performance et aider les danseurs à s’entraîner avec plus d’intention. Son approche combine mouvement, musicalité, mindset et structure — pour offrir non seulement une chorégraphie à performer, mais des outils utiles dans chaque cours, répétition et opportunité de scène.',
     },
-    proof: { 1: 'Danseur professionnel', 2: 'Fondateur de VISION Dance Camp', 3: 'Chorégraphie compétitive', 4: 'Ateliers en studio' },
+    proof: { 1: 'Danseur professionnel', 2: 'Fondateur de VISION', 3: 'Chorégraphie + ateliers', 4: 'Formation Vision Labs' },
+    services: {
+      title: 'Façons de travailler avec Jamie',
+      card1Title: 'Chorégraphie compétitive',
+      card1Body: 'Routines sur mesure pensées pour l’impact en compétition, la clarté musicale et une exécution plus propre sous pression.',
+      card1GoodFor: 'Idéal pour : Solos, duos, trios et routines d’équipe qui doivent être prêtes pour la compétition.',
+      card2Title: 'Ateliers en studio',
+      card2Body: 'Cours hip-hop à fort impact axés sur la qualité de mouvement, la texture, l’intention et la performance.',
+      card2GoodFor: 'Idéal pour : Journées d’invité, intensifs et programmation de saison en studio.',
+      card3Title: 'Coaching d’équipe compétitive',
+      card3Body: 'Blocs de coaching ciblés pour affiner la chorégraphie existante, les transitions, le staging et la constance.',
+      card3GoodFor: 'Idéal pour : Équipes qui se préparent aux régionales, nationales ou fins de semaine clés.',
+      card4Title: 'Vision Labs en studio',
+      card4Body: 'Format de développement structuré qui combine entraînement de mouvement et mindset pour des danseurs plus solides.',
+      card4GoodFor: 'Idéal pour : Studios qui veulent un développement durable au-delà d’une seule session.',
+      cta: 'Pas certain de ce dont votre studio a besoin? Demandez un devis et je vous recommanderai le meilleur format.',
+    },
+    labs: {
+      title: 'Vision Labs en studio',
+      subtitle: 'Une expérience de développement des danseurs conçue pour les studios qui veulent plus qu’un atelier standard.',
+      body: 'Vision Labs est conçu comme une expérience structurée et studio-friendly : moitié mouvement, moitié théorie. Les danseurs entraînent la qualité de performance, l’intention musicale et l’exécution, tout en apprenant des concepts pratiques de mindset et de répétition applicables immédiatement. Le studio obtient un cadre clair de développement qui soutient les résultats compétitifs et la progression à long terme.',
+      card1Title: '50% mouvement',
+      card1Body: 'Blocs d’entraînement intentionnels axés sur le groove, le contrôle, la texture et la qualité de performance.',
+      card2Title: '50% théorie',
+      card2Body: 'Concepts de mindset et de répétition pour s’entraîner avec plus de clarté et de constance.',
+      card3Title: 'Conçu pour la progression',
+      card3Body: 'Structure studio-friendly qui renforce les habitudes, le feedback et un développement prêt compétition.',
+      workbook: 'Voir un exemple de workbook',
+      cta: 'Amener Vision Labs dans votre studio',
+    },
     why: {
-      title: 'Pourquoi me réserver',
-      card1: 'Chorégraphie prête pour la compétition',
-      card2: 'Musicalité + coaching de performance',
-      card3: 'Structure de répétition claire',
-      card4: 'Communication efficace avec les studios',
-      card5: 'Des danseurs/danseuses plus solides',
+      title: 'Pourquoi les studios réservent Jamie',
+      card1Title: 'Chorégraphie prête compétition',
+      card1Body: 'Les routines sont construites pour des visuels propres, une précision musicale et un impact sur scène.',
+      card2Title: 'Coaching axé performance',
+      card2Body: 'Le travail met l’accent sur la présence, la confiance et la constance.',
+      card3Title: 'Structure claire de répétition',
+      card3Body: 'Les sessions suivent des objectifs concrets pour optimiser le temps et les progrès.',
+      card4Title: 'Mindset + théorie',
+      card4Body: 'Les danseurs apprennent à réfléchir, s’ajuster et mieux se préparer entre répétitions.',
+      card5Title: 'Communication studio-friendly',
+      card5Body: 'Les directions reçoivent une planification claire et un suivi fiable.',
+      card6Title: 'Des danseurs plus sharp',
+      card6Body: 'Chaque session renforce le mouvement et les habitudes d’entraînement.',
     },
     rates: {
       title: 'Tarifs de chorégraphie',
-      intro: 'Des devis personnalisés sont disponibles selon vos besoins précis.',
-      solo: 'Chorégraphie solo $750',
-      duo: 'Chorégraphie duo $900',
-      trio: 'Chorégraphie trio $1,050',
-      small: 'Petit groupe, 4–9 danseurs/danseuses $1,200 de base + $75/danseur',
-      smallBadge: 'Le plus populaire',
-      large: 'Grand groupe, 10–19 danseurs/danseuses $1,500 de base + $60/danseur',
-      largeBadge: 'Idéal pour les équipes compétitives',
-      line: 'Ligne/production, 20+ danseurs/danseuses Devis personnalisé, habituellement $2,500+',
+      intro: 'Des devis personnalisés sont disponibles selon la durée de la routine, la taille du groupe, les déplacements et les besoins du studio.',
+      solo: 'Chorégraphie solo: $750',
+      duo: 'Chorégraphie duo: $900',
+      trio: 'Chorégraphie trio: $1,050',
+      small: 'Petit groupe, 4–9 danseurs: $1,200 de base + $75/danseur',
+      large: 'Grand groupe, 10–19 danseurs: $1,500 de base + $60/danseur',
+      line: 'Ligne / production, 20+ danseurs: Devis personnalisé, habituellement $2,500+',
+      note: 'Les tarifs peuvent varier selon la durée de la routine, le format de répétition, le déplacement et les besoins de coaching additionnels.',
     },
     calc: {
-      title: 'Outil de devis premium',
-      body: 'Choisissez un service et le nombre de danseurs/danseuses pour une estimation rapide. 20+ danseurs/danseuses affiche un message de devis personnalisé.',
+      title: 'Estimation rapide',
+      body: 'Utilisez cet outil pour une estimation propre. Le devis final est confirmé après l’analyse des détails.',
       serviceLabel: 'Type de service',
-      dancerLabel: 'Nombre de danseurs/danseuses',
+      dancerLabel: 'Nombre de danseurs',
       optionSolo: 'Solo',
       optionDuo: 'Duo',
       optionTrio: 'Trio',
@@ -182,46 +261,68 @@ const translations = {
       optionLine: 'Ligne / production (20+)',
       button: 'Calculer',
       initial: 'Estimation : —',
-      invalidDancers: 'Veuillez entrer un nombre valide de danseurs/danseuses.',
-      customLarge: 'Devis personnalisé, habituellement $2,500+ pour 20+ danseurs/danseuses.',
+      invalidDancers: 'Veuillez entrer un nombre valide de danseurs.',
+      customLarge: 'Devis personnalisé, habituellement $2,500+ pour 20+ danseurs.',
       estimatedRate: 'Tarif estimé',
       baseLabel: 'de base',
       perDancerLabel: 'danseur',
-      smallRange: 'Le petit groupe est prévu pour 4 à 9 danseurs/danseuses.',
-      largeRange: 'Le grand groupe est prévu pour 10 à 19 danseurs/danseuses.',
+      smallRange: 'Le petit groupe est conçu pour 4 à 9 danseurs.',
+      largeRange: 'Le grand groupe est conçu pour 10 à 19 danseurs.',
       customAvailable: 'Des devis personnalisés sont disponibles.',
     },
     workshops: {
-      title: 'Ateliers',
-      intro: 'Conçus pour les studios qui veulent une exécution plus propre, une meilleure qualité de performance et des cadres de coaching concrets.',
+      title: 'Ateliers + entraînement d’équipe',
+      intro: 'Options d’entraînement studio-friendly axées sur la qualité de mouvement, les détails de performance et la préparation compétitive.',
       card1Title: 'Atelier de 1 heure $350/heure',
-      card1Body: 'Idéal pour des sessions ciblées en musicalité, texture et performance avec une équipe.',
+      card1Body: 'Session percutante pour une équipe ou un groupe ciblé.',
       card2Title: 'Intensif studio de 3+ heures, forfait réduit disponible',
-      card2Body: 'Idéal pour les studios qui enchaînent plusieurs blocs de développement d’équipes dans une même journée.',
+      card2Body: 'Conçu pour les studios qui enchaînent plusieurs équipes dans une journée.',
       card3Title: 'Coaching d’équipe compétitive sur devis personnalisé',
-      card3Body: 'Idéal pour les équipes de compétition qui préparent des sets complets, des transitions et la stratégie de scène.',
+      card3Body: 'Coaching ciblé pour affiner les sets existants et l’exécution sur scène.',
+      card4Title: 'Vision Labs en studio sur devis personnalisé',
+      card4Body: 'Format signature mouvement + mindset livré dans votre studio.',
       cta: 'Demander un devis',
     },
-    booking: {
-      title: 'Demande de réservation',
-      body: 'Prêt à planifier la chorégraphie ou des ateliers pour la saison de votre studio?',
-      note: 'Inclure : Nom du studio, Ville, Nombre de danseurs/danseuses, Service souhaité, Dates idéales.',
-      cta: 'Écrire à Jamie',
-      subject: 'Demande de réservation pour Jamie',
-      bodyTemplate: 'Bonjour Jamie,\n\nNom du studio :\nVille :\nNombre de danseurs/danseuses :\nService souhaité :\nDates idéales :\nAutres détails :\n',
+    process: {
+      title: 'Comment la réservation fonctionne',
+      step1Title: 'Envoyer une demande',
+      step1Body: 'Partagez les infos du studio, les objectifs, le niveau et la période visée.',
+      step2Title: 'Choisir le bon format',
+      step2Body: 'On aligne la chorégraphie, l’atelier, le coaching d’équipe ou Vision Labs.',
+      step3Title: 'Confirmer les détails',
+      step3Body: 'On confirme tarifs, horaire, déplacement et structure de répétition.',
+      step4Title: 'S’entraîner avec intention',
+      step4Body: 'Vos danseurs reçoivent un entraînement précis, orienté performance.',
     },
-    faq: {
-      title: 'FAQ',
-      q1: 'Offres-tu des devis personnalisés?',
-      a1: 'Oui. Des devis personnalisés sont disponibles pour tous les projets.',
-      q2: 'Qu’est-ce qui influence les tarifs?',
-      a2: 'La taille du groupe, la complexité de la routine, l’échéancier et le format des répétitions.',
-      q3: 'Te déplaces-tu?',
-      a3: 'Oui. Les déplacements sont possibles selon l’horaire et la localisation.',
-      q4: 'Comment commence-t-on?',
-      a4: 'Envoyez les infos de votre studio, vos objectifs, le nombre de danseurs/danseuses et vos dates cibles pour démarrer.',
-      q5: 'Peux-tu coacher une chorégraphie existante?',
-      a5: 'Oui. Les sessions de coaching peuvent raffiner une chorégraphie existante pour une exécution plus propre et une meilleure performance.',
+    booking: {
+      ctaTitle: 'Prêt à accueillir Jamie dans votre studio?',
+      ctaSubtitle: 'Dites-nous ce dont votre équipe a besoin et vous recevrez un devis clair et studio-friendly.',
+      topCta: 'Demander un devis',
+      topRates: 'Voir les tarifs',
+      title: 'Demander un devis',
+      name: 'Nom',
+      studio: 'Nom du studio',
+      email: 'Courriel',
+      city: 'Ville / Province',
+      interest: 'Qu’est-ce qui vous intéresse?',
+      interest1: 'Chorégraphie compétitive',
+      interest2: 'Atelier en studio',
+      interest3: 'Coaching d’équipe',
+      interest4: 'Vision Labs en studio',
+      interest5: 'Pas certain encore',
+      dancers: 'Nombre de danseurs',
+      level: 'Niveau des danseurs',
+      level1: 'Débutant',
+      level2: 'Intermédiaire',
+      level3: 'Avancé',
+      level4: 'Équipe compétitive',
+      level5: 'Niveaux mixtes',
+      date: 'Date ou période souhaitée',
+      message: 'Message / détails',
+      send: 'Envoyer la demande',
+      note: 'Ce formulaire ouvre votre application courriel et envoie votre demande directement à Jamie.',
+      directEmail: 'Ou écrire directement : jameselalouf@gmail.com',
+      subject: 'Demande de réservation pour Jamie Elalouf',
     },
   },
 };
@@ -240,30 +341,21 @@ function formatCurrency(value) {
 function getEstimate(service, dancers) {
   const calc = translations[currentLanguage].calc;
 
-  if (!Number.isFinite(dancers) || dancers < 1) {
-    return calc.invalidDancers;
-  }
-
-  if (service === 'line' || dancers >= 20) {
-    return calc.customLarge;
-  }
+  if (!Number.isFinite(dancers) || dancers < 1) return calc.invalidDancers;
+  if (service === 'line' || dancers >= 20) return calc.customLarge;
 
   if (service === 'solo') return `${calc.estimatedRate}: ${formatCurrency(pricing.solo)}`;
   if (service === 'duo') return `${calc.estimatedRate}: ${formatCurrency(pricing.duo)}`;
   if (service === 'trio') return `${calc.estimatedRate}: ${formatCurrency(pricing.trio)}`;
 
   if (service === 'small') {
-    if (dancers < 4 || dancers > 9) {
-      return calc.smallRange;
-    }
+    if (dancers < 4 || dancers > 9) return calc.smallRange;
     const total = pricing.smallBase + dancers * pricing.smallPerDancer;
     return `${calc.estimatedRate}: ${formatCurrency(total)} (${formatCurrency(pricing.smallBase)} ${calc.baseLabel} + ${formatCurrency(pricing.smallPerDancer)}/${calc.perDancerLabel})`;
   }
 
   if (service === 'large') {
-    if (dancers < 10 || dancers > 19) {
-      return calc.largeRange;
-    }
+    if (dancers < 10 || dancers > 19) return calc.largeRange;
     const total = pricing.largeBase + dancers * pricing.largePerDancer;
     return `${calc.estimatedRate}: ${formatCurrency(total)} (${formatCurrency(pricing.largeBase)} ${calc.baseLabel} + ${formatCurrency(pricing.largePerDancer)}/${calc.perDancerLabel})`;
   }
@@ -283,10 +375,7 @@ function setEstimate() {
 
 function setBookingMailto() {
   if (!bookingEmail) return;
-  const booking = translations[currentLanguage].booking;
-  const subject = encodeURIComponent(booking.subject);
-  const body = encodeURIComponent(booking.bodyTemplate);
-  bookingEmail.href = `mailto:jameselalouf@gmail.com?subject=${subject}&body=${body}`;
+  bookingEmail.href = 'mailto:jameselalouf@gmail.com';
 }
 
 function applyTranslations() {
@@ -298,9 +387,7 @@ function applyTranslations() {
   });
 
   document.title = translations[currentLanguage].pageTitle;
-  if (descriptionMeta) {
-    descriptionMeta.setAttribute('content', translations[currentLanguage].pageDescription);
-  }
+  if (descriptionMeta) descriptionMeta.setAttribute('content', translations[currentLanguage].pageDescription);
 
   languageButtons.forEach((button) => {
     button.classList.toggle('is-active', button.dataset.lang === currentLanguage);
@@ -310,8 +397,32 @@ function applyTranslations() {
   setEstimate();
 }
 
-estimateBtn?.addEventListener('click', setEstimate);
+function toMailtoBody(formData) {
+  const rows = [
+    ['Name', formData.get('name') || ''],
+    ['Studio name', formData.get('studio') || ''],
+    ['Email', formData.get('email') || ''],
+    ['City / Province', formData.get('city') || ''],
+    ['Interested in', formData.get('interest') || ''],
+    ['Number of dancers', formData.get('dancers') || ''],
+    ['Dancer level', formData.get('level') || ''],
+    ['Preferred date or timeframe', formData.get('date') || ''],
+    ['Message / details', formData.get('message') || ''],
+  ];
 
+  return rows.map(([label, value]) => `${label}: ${value}`).join('\n');
+}
+
+bookingForm?.addEventListener('submit', (event) => {
+  event.preventDefault();
+  const formData = new FormData(bookingForm);
+  const booking = translations[currentLanguage].booking;
+  const subject = encodeURIComponent(booking.subject);
+  const body = encodeURIComponent(toMailtoBody(formData));
+  window.location.href = `mailto:jameselalouf@gmail.com?subject=${subject}&body=${body}`;
+});
+
+estimateBtn?.addEventListener('click', setEstimate);
 serviceSelect?.addEventListener('change', setEstimate);
 dancerInput?.addEventListener('input', setEstimate);
 
@@ -339,7 +450,6 @@ navLinks?.querySelectorAll('a').forEach((link) => {
 
 const navAnchors = document.querySelectorAll('.nav-links a');
 const sections = [...navAnchors].map((a) => document.querySelector(a.getAttribute('href'))).filter(Boolean);
-
 if (sections.length) {
   const sectionObserver = new IntersectionObserver(
     (entries) => {
@@ -351,9 +461,8 @@ if (sections.length) {
         });
       });
     },
-    { threshold: 0.5 }
+    { threshold: 0.45 }
   );
-
   sections.forEach((section) => sectionObserver.observe(section));
 }
 
@@ -370,18 +479,8 @@ if (revealItems.length) {
     },
     { threshold: 0.16 }
   );
-
   revealItems.forEach((item) => revealObserver.observe(item));
 }
-
-const faqItems = document.querySelectorAll('[data-accordion-item]');
-faqItems.forEach((item) => {
-  const trigger = item.querySelector('[data-accordion-trigger]');
-  trigger?.addEventListener('click', () => {
-    const isOpen = item.classList.toggle('open');
-    trigger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
-  });
-});
 
 window.addEventListener('scroll', () => {
   if (!siteHeader) return;
