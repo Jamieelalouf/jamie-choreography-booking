@@ -125,7 +125,7 @@ const translations = {
     workshops: {
       title: 'Workshops + team training',
       intro: 'Book Jamie for focused hip-hop training, competitive team coaching, or studio intensives built around your dancers’ needs.',
-      card1Title: '1-hour workshop $350/hour',
+      card1Title: '1-hour workshop $300/hour',
       card1Body: 'Best for focused training in musicality, texture, grooves, performance, or hip-hop foundations.',
       card2Title: '3+ hour studio intensive discounted package available',
       card2Body: 'Best for deeper training, multi-class development, or a half-day intensive.',
@@ -173,7 +173,7 @@ const translations = {
       message: 'Message / details',
       send: 'Send request',
       note: 'This form opens your email app and sends your request directly to Jamie.',
-      directEmail: 'Or email directly: jameselalouf@gmail.com',
+      directEmail: 'Or email directly: jamie@visiondance.ca',
       subject: 'Booking Request for Jamie Elalouf',
     },
   },
@@ -281,7 +281,7 @@ const translations = {
     workshops: {
       title: 'Ateliers + entraînement d’équipe',
       intro: 'Options d’entraînement studio-friendly axées sur la qualité de mouvement, les détails de performance et la préparation compétitive.',
-      card1Title: 'Atelier de 1 heure $350/heure',
+      card1Title: 'Atelier de 1 heure $300/heure',
       card1Body: 'Session percutante pour une équipe ou un groupe ciblé.',
       card2Title: 'Intensif studio de 3+ heures, forfait réduit disponible',
       card2Body: 'Conçu pour les studios qui enchaînent plusieurs équipes dans une journée.',
@@ -329,7 +329,7 @@ const translations = {
       message: 'Message / détails',
       send: 'Envoyer la demande',
       note: 'Ce formulaire ouvre votre application courriel et envoie votre demande directement à Jamie.',
-      directEmail: 'Ou écrire directement : jameselalouf@gmail.com',
+      directEmail: 'Ou écrire directement : jamie@visiondance.ca',
       subject: 'Demande de réservation pour Jamie Elalouf',
     },
   },
@@ -383,7 +383,7 @@ function setEstimate() {
 
 function setBookingMailto() {
   if (!bookingEmail) return;
-  bookingEmail.href = 'mailto:jameselalouf@gmail.com';
+  bookingEmail.href = 'mailto:jamie@visiondance.ca';
 }
 
 function applyTranslations() {
@@ -427,7 +427,7 @@ bookingForm?.addEventListener('submit', (event) => {
   const booking = translations[currentLanguage].booking;
   const subject = encodeURIComponent(booking.subject);
   const body = encodeURIComponent(toMailtoBody(formData));
-  window.location.href = `mailto:jameselalouf@gmail.com?subject=${subject}&body=${body}`;
+  window.location.href = `mailto:jamie@visiondance.ca?subject=${subject}&body=${body}`;
 });
 
 estimateBtn?.addEventListener('click', setEstimate);

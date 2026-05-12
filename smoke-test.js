@@ -71,11 +71,23 @@ const requiredRates = [
   '$1,200 base + $75/dancer',
   '$1,500 base + $60/dancer',
   '$2,500+',
-  '$350/hour',
+  '$300/hour',
 ];
 
 requiredRates.forEach((rate) => {
   assert(html.includes(rate) || js.includes(rate), `Missing required rate string: ${rate}`);
+});
+
+const forbiddenStrings = [
+  'jameselalouf@gmail.com',
+  '$350/hour',
+  '$350/heure',
+];
+
+forbiddenStrings.forEach((text) => {
+  assert(!html.includes(text), `Forbidden legacy string found in index.html: ${text}`);
+  assert(!js.includes(text), `Forbidden legacy string found in app.js: ${text}`);
+  assert(!css.includes(text), `Forbidden legacy string found in styles.css: ${text}`);
 });
 
 const bookingStrings = [
