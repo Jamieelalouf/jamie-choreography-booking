@@ -13,6 +13,7 @@ const requiredFiles = [
   'app.js',
   'smoke-test.js',
   path.join('assets', 'jamie-portrait.jpg'),
+  path.join('assets', 'vision-labs-sample-workbook.pdf'),
 ];
 
 requiredFiles.forEach((rel) => {
@@ -27,8 +28,14 @@ const js = fs.readFileSync(path.join(root, 'app.js'), 'utf8');
 const parseCheck = spawnSync(process.execPath, ['--check', path.join(root, 'app.js')], { encoding: 'utf8' });
 assert(parseCheck.status === 0, `app.js failed parse check: ${parseCheck.stderr || parseCheck.stdout}`);
 
-['id="services"', 'id="rates"', 'id="workshops"', 'id="vision-labs"', 'id="booking"', 'href="WORKBOOK_LINK_HERE"'].forEach((needle) => {
+['id="services"', 'id="rates"', 'id="workshops"', 'id="vision-labs"', 'id="booking"', 'href="assets/vision-labs-sample-workbook.pdf"'].forEach((needle) => {
   assert(html.includes(needle), `index.html missing required marker: ${needle}`);
+});
+
+['WORKBOOK_LINK_HERE'].forEach((needle) => {
+  assert(!html.includes(needle), `Placeholder must be absent from index.html: ${needle}`);
+  assert(!js.includes(needle), `Placeholder must be absent from app.js: ${needle}`);
+  assert(!css.includes(needle), `Placeholder must be absent from styles.css: ${needle}`);
 });
 
 [
