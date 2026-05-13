@@ -9,15 +9,17 @@ const navLinks = document.getElementById('nav-links');
 const siteHeader = document.querySelector('.site-header');
 const languageButtons = document.querySelectorAll('.lang-btn');
 const descriptionMeta = document.querySelector('meta[name="description"]');
+const addonsToggle = document.getElementById('addonsToggle');
+const addonsPanel = document.getElementById('addonsPanel');
 
 const pricing = {
   solo: 750,
   duo: 900,
   trio: 1050,
-  smallBase: 1200,
+  smallBase: 1450,
   smallPerDancer: 75,
-  largeBase: 1500,
-  largePerDancer: 60,
+  largeBase: 1750,
+  largePerDancer: 65,
 };
 
 const translations = {
@@ -41,7 +43,19 @@ const translations = {
       body1: 'Jamie Elalouf is a Montreal-based professional hip-hop dancer, choreographer, and founder of VISION Dance Camp. With over 15 years of teaching experience and 70+ routines brought to the stage, he helps studios and competitive teams create stage-ready choreography, sharpen performance quality, and train with more intention.',
       body2: 'His approach blends movement, musicality, mindset, and structure — giving dancers not just choreography to perform, but tools they can carry into every class, rehearsal, and stage opportunity.',
     },
-    proof: { 1: 'Professional dancer', 2: 'Founder of VISION', 3: 'Choreography + workshops', 4: 'VISION Labs training' },
+    credibility: {
+      title: 'Experience that goes beyond choreography',
+      body: 'Jamie Elalouf is a professional dancer, choreographer, educator, and founder of VISION Dance Convention, one of Canada’s leading hip-hop dance training events. He has judged for Hip Hop Canada and World of Dance, choreographed 70+ competitive routines, taught internationally, and worked with dancers across multiple levels through workshops, choreography, competitive coaching, and VISION LABS-style development sessions.',
+      cards: {
+        routines: { value: '70+', label: 'Competitive routines choreographed' },
+        hhc: { value: 'Hip Hop Canada', label: 'Judging experience' },
+        wod: { value: 'World of Dance', label: 'Judging experience' },
+        international: { value: 'International', label: 'Teaching experience' },
+        convention: { value: 'VISION Dance Convention', label: 'Founder of one of Canada’s leading hip-hop training events' },
+        labs: { value: 'VISION LABS', label: 'Creator of a structured dancer development program' },
+      },
+    },
+    proof: { 1: 'Professional dancer', 2: 'Founder of VISION', 3: 'Choreography + workshops' },
     services: {
       title: 'Ways to work with Jamie',
       card1Title: 'Competitive Choreography',
@@ -91,14 +105,89 @@ const translations = {
     },
     rates: {
       title: 'Choreography rates',
-      intro: 'Custom quotes are available depending on routine length, group size, travel, and studio needs.',
-      solo: 'Solo choreography: $750',
-      duo: 'Duo choreography: $900',
-      trio: 'Trio choreography: $1,050',
-      small: 'Small group, 4–9 dancers: $1,200 base + $75/dancer',
-      large: 'Large group, 10–19 dancers: $1,500 base + $60/dancer',
-      line: 'Line / production, 20+ dancers: Custom quote, usually $2,500+',
+      intro: 'Choreography rates are based on routine length, number of dancers, rehearsal structure, and the amount of cleaning or performance coaching needed. Each package includes an initial choreography session, basic cleaning, and routine structure support. Additional coaching, polishing, and travel can be added if needed.',
       note: 'Rates may vary depending on routine length, rehearsal format, travel, and additional coaching needs.',
+      cards: {
+        solo: {
+          type: 'Solo choreography',
+          price: '$750',
+          items: {
+            1: 'Up to 2:00 minutes of choreography',
+            2: 'One 3-hour in-studio choreography session',
+            3: 'Cleaning during the session',
+            4: 'Music mix included',
+            5: 'One short follow-up video feedback round',
+          },
+        },
+        duo: {
+          type: 'Duo choreography',
+          price: '$900',
+          items: {
+            1: 'Up to 2:00 minutes of choreography',
+            2: 'One 3-hour in-studio choreography session',
+            3: 'Spacing and partner work',
+            4: 'Cleaning during the session',
+            5: 'Music mix included',
+            6: 'One short follow-up video feedback round',
+          },
+        },
+        trio: {
+          type: 'Trio choreography',
+          price: '$1,050',
+          items: {
+            1: 'Up to 2:30 minutes of choreography',
+            2: 'One 3-hour in-studio choreography session',
+            3: 'Formation and spacing work',
+            4: 'Cleaning during the session',
+            5: 'Music mix included',
+            6: 'One short follow-up video feedback round',
+          },
+        },
+        small: {
+          type: 'Small group choreography',
+          price: '4–9 dancers · $1,450 base + $75/dancer',
+          items: {
+            1: '2:30–3:00 minutes of choreography',
+            2: 'One 3-hour in-studio choreography session',
+            3: 'Formation and spacing work',
+            4: 'Cleaning during the session',
+            5: 'Music mix included',
+            6: 'One short follow-up video feedback round',
+          },
+        },
+        large: {
+          type: 'Large group choreography',
+          price: '10–19 dancers · $1,750 base + $65/dancer',
+          items: {
+            1: 'Up to 3:00 minutes of choreography',
+            2: 'One 3-hour in-studio choreography session',
+            3: 'Formation and spacing work',
+            4: 'Cleaning during the session',
+            5: 'Music mix included',
+            6: 'One short follow-up video feedback round',
+          },
+        },
+        line: {
+          type: 'Line / production choreography',
+          price: '20+ dancers · Custom quote, usually $2,950+',
+          items: {
+            1: 'Custom routine structure',
+            2: 'Formation and staging plan',
+            3: 'Choreography session plan based on group size',
+            4: 'Cleaning and coaching options available',
+            5: 'Quote based on length, number of dancers, rehearsal time, and production needs',
+          },
+        },
+      },
+      addons: {
+        title: 'Additional choreography support',
+        toggleLabel: 'View add-ons',
+        intro: 'Add-ons are available for studios or dancers who want extra support beyond the initial choreography session.',
+        items: {
+          1: 'Additional rehearsal / cleaning session: $150/hour',
+          2: 'Extra choreography time: $150/hour',
+        },
+      },
     },
     calc: {
       title: 'Quick estimate',
@@ -114,7 +203,7 @@ const translations = {
       button: 'Calculate',
       initial: 'Estimate: —',
       invalidDancers: 'Please enter a valid dancer count.',
-      customLarge: 'Custom quote, usually $2,500+ for 20+ dancers.',
+      customLarge: 'Custom quote, usually $2,950+ for 20+ dancers.',
       estimatedRate: 'Estimated rate',
       baseLabel: 'base',
       perDancerLabel: 'dancer',
@@ -127,8 +216,8 @@ const translations = {
       intro: 'Book Jamie for focused hip-hop training, competitive team coaching, or studio intensives built around your dancers’ needs.',
       card1Title: '1-hour workshop $300/hour',
       card1Body: 'Best for focused training in musicality, texture, grooves, performance, or hip-hop foundations.',
-      card2Title: '3+ hour studio intensive discounted package available',
-      card2Body: 'Best for deeper training, multi-class development, or a half-day intensive.',
+      card2Title: 'Discounted packages available',
+      card2Body: 'Contact Jamie for details if you want a longer or multi-class package.',
       card3Title: 'Competitive team coaching custom quote',
       card3Body: 'Best for cleaning routines, improving transitions, sharpening performance, and preparing for competition season.',
       card4Title: 'In-Studio VISION Labs custom quote',
@@ -150,7 +239,6 @@ const translations = {
       ctaTitle: 'Ready to bring Jamie to your studio?',
       ctaSubtitle: 'Whether you need choreography, workshops, team coaching, or a full VISION Labs-style training experience, send a request and I’ll help build the right format for your dancers.',
       topCta: 'Email me here',
-      topRates: 'View rates',
     },
   },
   fr: {
@@ -173,7 +261,19 @@ const translations = {
       body1: 'Jamie Elalouf est un danseur hip-hop professionnel, chorégraphe et fondateur de VISION Dance Camp, basé à Montréal. Il travaille avec des studios et des équipes compétitives pour créer des chorégraphies précises, renforcer la qualité de performance et aider les danseurs à s’entraîner avec plus d’intention.',
       body2: 'Son approche combine mouvement, musicalité, mindset et structure — pour offrir non seulement une chorégraphie à performer, mais des outils utiles dans chaque cours, répétition et opportunité de scène.',
     },
-    proof: { 1: 'Danseur professionnel', 2: 'Fondateur de VISION', 3: 'Chorégraphie + ateliers', 4: 'Formation VISION Labs' },
+    credibility: {
+      title: 'Une expérience qui va au-delà de la chorégraphie',
+      body: 'Jamie Elalouf est un danseur professionnel, chorégraphe, éducateur et fondateur de VISION Dance Convention, l’un des plus grands événements canadiens de formation hip-hop. Il a jugé pour Hip Hop Canada et World of Dance, chorégraphié plus de 70 routines compétitives, enseigné à l’international, et accompagné des danseurs de plusieurs niveaux à travers des ateliers, la chorégraphie, le coaching compétitif et des sessions de développement de style VISION LABS.',
+      cards: {
+        routines: { value: '70+', label: 'Routines compétitives chorégraphiées' },
+        hhc: { value: 'Hip Hop Canada', label: 'Expérience en jugement' },
+        wod: { value: 'World of Dance', label: 'Expérience en jugement' },
+        international: { value: 'International', label: 'Expérience d’enseignement' },
+        convention: { value: 'VISION Dance Convention', label: 'Fondateur de l’un des plus grands événements canadiens de formation hip-hop' },
+        labs: { value: 'VISION LABS', label: 'Créateur d’un programme structuré de développement des danseurs' },
+      },
+    },
+    proof: { 1: 'Danseur professionnel', 2: 'Fondateur de VISION', 3: 'Chorégraphie + ateliers' },
     services: {
       title: 'Façons de travailler avec Jamie',
       card1Title: 'Chorégraphie compétitive',
@@ -223,14 +323,89 @@ const translations = {
     },
     rates: {
       title: 'Tarifs de chorégraphie',
-      intro: 'Des devis personnalisés sont disponibles selon la durée de la routine, la taille du groupe, les déplacements et les besoins du studio.',
-      solo: 'Chorégraphie solo: $750',
-      duo: 'Chorégraphie duo: $900',
-      trio: 'Chorégraphie trio: $1,050',
-      small: 'Petit groupe, 4–9 danseurs: $1,200 de base + $75/danseur',
-      large: 'Grand groupe, 10–19 danseurs: $1,500 de base + $60/danseur',
-      line: 'Ligne / production, 20+ danseurs: Devis personnalisé, habituellement $2,500+',
+      intro: 'Les tarifs de chorégraphie sont basés sur la durée de la routine, le nombre de danseurs, la structure de répétition et le niveau de nettoyage ou de coaching de performance requis. Chaque forfait inclut une session initiale de chorégraphie, un nettoyage de base et un soutien de structure de routine. Du coaching additionnel, du polissage et les déplacements peuvent être ajoutés au besoin.',
       note: 'Les tarifs peuvent varier selon la durée de la routine, le format de répétition, le déplacement et les besoins de coaching additionnels.',
+      cards: {
+        solo: {
+          type: 'Chorégraphie solo',
+          price: '$750',
+          items: {
+            1: 'Jusqu’à 2:00 minutes de chorégraphie',
+            2: 'Une session de chorégraphie en studio de 3 heures',
+            3: 'Nettoyage pendant la session',
+            4: 'Mix musical inclus',
+            5: 'Un court retour vidéo de suivi',
+          },
+        },
+        duo: {
+          type: 'Chorégraphie duo',
+          price: '$900',
+          items: {
+            1: 'Jusqu’à 2:00 minutes de chorégraphie',
+            2: 'Une session de chorégraphie en studio de 3 heures',
+            3: 'Travail sur les espacements et le partenaire',
+            4: 'Nettoyage pendant la session',
+            5: 'Mix musical inclus',
+            6: 'Un court retour vidéo de suivi',
+          },
+        },
+        trio: {
+          type: 'Chorégraphie trio',
+          price: '$1,050',
+          items: {
+            1: 'Jusqu’à 2:30 minutes de chorégraphie',
+            2: 'Une session de chorégraphie en studio de 3 heures',
+            3: 'Travail de formation et d’espacement',
+            4: 'Nettoyage pendant la session',
+            5: 'Mix musical inclus',
+            6: 'Un court retour vidéo de suivi',
+          },
+        },
+        small: {
+          type: 'Chorégraphie petit groupe',
+          price: '4–9 danseurs · $1,450 de base + $75/danseur',
+          items: {
+            1: '2:30–3:00 minutes de chorégraphie',
+            2: 'Une session de chorégraphie en studio de 3 heures',
+            3: 'Travail de formation et d’espacement',
+            4: 'Nettoyage pendant la session',
+            5: 'Mix musical inclus',
+            6: 'Un court retour vidéo de suivi',
+          },
+        },
+        large: {
+          type: 'Chorégraphie grand groupe',
+          price: '10–19 danseurs · $1,750 de base + $65/danseur',
+          items: {
+            1: 'Jusqu’à 3:00 minutes de chorégraphie',
+            2: 'Une session de chorégraphie en studio de 3 heures',
+            3: 'Travail de formation et d’espacement',
+            4: 'Nettoyage pendant la session',
+            5: 'Mix musical inclus',
+            6: 'Un court retour vidéo de suivi',
+          },
+        },
+        line: {
+          type: 'Chorégraphie ligne / production',
+          price: '20+ danseurs · Devis personnalisé, habituellement $2,950+',
+          items: {
+            1: 'Structure de routine personnalisée',
+            2: 'Plan de formation et de mise en scène',
+            3: 'Plan de session de chorégraphie selon la taille du groupe',
+            4: 'Options de nettoyage et de coaching disponibles',
+            5: 'Devis basé sur la durée, le nombre de danseurs, le temps de répétition et les besoins de production',
+          },
+        },
+      },
+      addons: {
+        title: 'Soutien chorégraphique additionnel',
+        toggleLabel: 'Voir les ajouts',
+        intro: 'Des ajouts sont disponibles pour les studios ou les danseurs qui veulent du soutien supplémentaire au-delà de la session initiale de chorégraphie.',
+        items: {
+          1: 'Session additionnelle de répétition / nettoyage: $150/heure',
+          2: 'Temps additionnel de chorégraphie: $150/heure',
+        },
+      },
     },
     calc: {
       title: 'Estimation rapide',
@@ -246,7 +421,7 @@ const translations = {
       button: 'Calculer',
       initial: 'Estimation : —',
       invalidDancers: 'Veuillez entrer un nombre valide de danseurs.',
-      customLarge: 'Devis personnalisé, habituellement $2,500+ pour 20+ danseurs.',
+      customLarge: 'Devis personnalisé, habituellement $2,950+ pour 20+ danseurs.',
       estimatedRate: 'Tarif estimé',
       baseLabel: 'de base',
       perDancerLabel: 'danseur',
@@ -259,8 +434,8 @@ const translations = {
       intro: 'Options d’entraînement studio-friendly axées sur la qualité de mouvement, les détails de performance et la préparation compétitive.',
       card1Title: 'Atelier de 1 heure $300/heure',
       card1Body: 'Session percutante pour une équipe ou un groupe ciblé.',
-      card2Title: 'Intensif studio de 3+ heures, forfait réduit disponible',
-      card2Body: 'Conçu pour les studios qui enchaînent plusieurs équipes dans une journée.',
+      card2Title: 'Forfaits à prix réduit disponibles',
+      card2Body: 'Contactez Jamie pour les détails si vous voulez un format plus long ou multi-classes.',
       card3Title: 'Coaching d’équipe compétitive sur devis personnalisé',
       card3Body: 'Coaching ciblé pour affiner les sets existants et l’exécution sur scène.',
       card4Title: 'VISION Labs en studio sur devis personnalisé',
@@ -282,7 +457,6 @@ const translations = {
       ctaTitle: 'Prêt à accueillir Jamie dans votre studio?',
       ctaSubtitle: 'Dites-nous ce dont votre équipe a besoin et vous recevrez un devis clair et studio-friendly.',
       topCta: 'Écrivez-moi ici',
-      topRates: 'Voir les tarifs',
     },
   },
 };
@@ -375,6 +549,13 @@ navLinks?.querySelectorAll('a').forEach((link) => {
     navLinks.classList.remove('open');
     navToggle?.setAttribute('aria-expanded', 'false');
   });
+});
+
+addonsToggle?.addEventListener('click', () => {
+  if (!addonsPanel) return;
+  const isExpanded = addonsToggle.getAttribute('aria-expanded') === 'true';
+  addonsToggle.setAttribute('aria-expanded', isExpanded ? 'false' : 'true');
+  addonsPanel.hidden = isExpanded;
 });
 
 const navAnchors = document.querySelectorAll('.nav-links a');

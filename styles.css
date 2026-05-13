@@ -523,6 +523,7 @@ html.js-enabled.hero-ready .hero-copy .hero-cta {
 .pricing-grid,
 .workshops-grid,
 .proof-grid,
+.credibility-grid,
 .service-grid,
 .labs-grid,
 .process-grid {
@@ -715,6 +716,38 @@ html.js-enabled.hero-ready .hero-copy .hero-cta {
   align-items: start;
 }
 
+.credibility-grid {
+  margin-top: 1.4rem;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+.credibility-card {
+  border-radius: var(--radius-md);
+  border: 1px solid var(--line-dark);
+  background: linear-gradient(160deg, rgba(233, 242, 255, 0.08), rgba(143, 174, 236, 0.04));
+  padding: 1.05rem;
+  display: grid;
+  gap: 0.52rem;
+  transition: transform 220ms ease, box-shadow 220ms ease, border-color 220ms ease;
+}
+
+.credibility-card h3 {
+  color: #f3f8ff;
+  font-size: 1.12rem;
+  line-height: 1.2;
+}
+
+.credibility-card p {
+  color: #c5d0e4;
+  font-size: 0.91rem;
+}
+
+.credibility-card:hover {
+  transform: translateY(-5px);
+  border-color: rgba(187, 212, 255, 0.44);
+  box-shadow: 0 14px 32px rgba(16, 23, 36, 0.14);
+}
+
 .about-grid p + p {
   margin-top: 0.8rem;
 }
@@ -803,12 +836,105 @@ html.js-enabled.hero-ready .hero-copy .hero-cta {
 }
 
 .price-card {
-  padding: 1.1rem;
+  padding: 0;
   background: var(--glass);
   border-color: var(--line-dark);
-  display: grid;
-  gap: 0.65rem;
   transition: transform 200ms ease, box-shadow 200ms ease;
+}
+
+.rate-details {
+  border-radius: inherit;
+}
+
+.rate-details summary {
+  list-style: none;
+  cursor: pointer;
+  display: grid;
+  gap: 0.45rem;
+  padding: 1.05rem;
+}
+
+.rate-details summary::-webkit-details-marker {
+  display: none;
+}
+
+.rate-details summary::after {
+  content: "+";
+  justify-self: start;
+  border: 1px solid rgba(255, 255, 255, 0.26);
+  border-radius: 999px;
+  padding: 0.24rem 0.6rem;
+  font-size: 0.95rem;
+  line-height: 1;
+  color: #d7e0f4;
+}
+
+.rate-details[open] summary::after {
+  content: "−";
+}
+
+.rate-type {
+  font-size: 1.04rem;
+  font-weight: 700;
+  color: #f4f7ff;
+}
+
+.rate-price {
+  font-size: 1rem;
+  color: #dce8ff;
+  font-weight: 700;
+}
+
+.rate-list {
+  margin: 0;
+  padding: 0 1.05rem 1.05rem 1.95rem;
+  display: grid;
+  gap: 0.45rem;
+  color: #e4ebfa;
+  font-size: 0.9rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+.addon-accordion {
+  margin-top: 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: var(--radius-md);
+  background: rgba(255, 255, 255, 0.04);
+  padding: 1rem;
+}
+
+.addon-toggle {
+  margin-top: 0.55rem;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  color: #edf2ff;
+  font: inherit;
+  font-weight: 700;
+  padding: 0.5rem 0.85rem;
+  cursor: pointer;
+}
+
+.addon-panel {
+  margin-top: 0.8rem;
+  display: grid;
+  gap: 0.7rem;
+}
+
+.addon-panel[hidden] {
+  display: none;
+}
+
+.addon-panel p {
+  color: #d2dbee;
+}
+
+.addon-list {
+  margin: 0;
+  padding-left: 1.2rem;
+  display: grid;
+  gap: 0.4rem;
+  color: #eaf0ff;
 }
 
 .badge {

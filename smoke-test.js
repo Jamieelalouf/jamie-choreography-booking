@@ -12,7 +12,7 @@ const requiredFiles = [
   'styles.css',
   'app.js',
   'smoke-test.js',
-  path.join('assets', 'jamie-portrait.jpg'),
+  path.join('assets', 'jamie-portrait-hires.jpg'),
   path.join('assets', 'vision-labs-sample-workbook.pdf'),
 ];
 
@@ -31,7 +31,7 @@ const instagramUrl2 = 'https://www.instagram.com/p/DXPmW03jrC1/?hl=en&img_index=
 const parseCheck = spawnSync(process.execPath, ['--check', path.join(root, 'app.js')], { encoding: 'utf8' });
 assert(parseCheck.status === 0, `app.js failed parse check: ${parseCheck.stderr || parseCheck.stdout}`);
 
-['id="services"', 'id="rates"', 'id="workshops"', 'id="vision-labs"', 'id="booking"', 'href="assets/vision-labs-sample-workbook.pdf?v=20260513-new"'].forEach((needle) => {
+['id="credibility"', 'id="services"', 'id="rates"', 'id="workshops"', 'id="vision-labs"', 'id="booking"', 'href="assets/vision-labs-sample-workbook.pdf?v=20260513-new"'].forEach((needle) => {
   assert(html.includes(needle), `index.html missing required marker: ${needle}`);
 });
 
@@ -107,14 +107,45 @@ assert(labsIndex !== -1, 'Could not find vision-labs section.');
 assert(bookingIndex !== -1, 'Could not find booking section.');
 assert(workshopsIndex < labsIndex && labsIndex < bookingIndex, 'VISION Labs must appear after Workshops and before Booking in index.html.');
 
+const credibilitySectionMatch = html.match(/<section[^>]*id="credibility"[\s\S]*?<\/section>/);
+assert(credibilitySectionMatch, 'Could not parse #credibility section from index.html.');
+const credibilitySectionHtml = credibilitySectionMatch[0];
+assert(credibilitySectionHtml.includes('data-i18n="credibility.title"'), 'Credibility title marker missing from index.html.');
+assert(credibilitySectionHtml.includes('data-i18n="credibility.body"'), 'Credibility body marker missing from index.html.');
+
+const requiredCredibilityStrings = [
+  'Experience that goes beyond choreography',
+  'Jamie Elalouf is a professional dancer, choreographer, educator, and founder of VISION Dance Convention, one of Canada’s leading hip-hop dance training events. He has judged for Hip Hop Canada and World of Dance, choreographed 70+ competitive routines, taught internationally, and worked with dancers across multiple levels through workshops, choreography, competitive coaching, and VISION LABS-style development sessions.',
+  '70+',
+  'Competitive routines choreographed',
+  'Hip Hop Canada',
+  'Judging experience',
+  'World of Dance',
+  'International',
+  'Teaching experience',
+  'VISION Dance Convention',
+  'Founder of one of Canada’s leading hip-hop training events',
+  'VISION LABS',
+  'Creator of a structured dancer development program',
+];
+
+requiredCredibilityStrings.forEach((text) => {
+  assert(credibilitySectionHtml.includes(text) || js.includes(text), `Missing credibility marker/copy: ${text}`);
+});
+
 const requiredRates = [
   '$750',
   '$900',
   '$1,050',
-  '$1,200 base + $75/dancer',
-  '$1,500 base + $60/dancer',
-  '$2,500+',
-  '$300/hour',
+  '$1,450 base + $75/dancer',
+  '$1,750 base + $65/dancer',
+  '$2,950+',
+  'Additional rehearsal / cleaning session: $150/hour',
+  'Extra choreography time: $150/hour',
+  'Session additionnelle de répétition / nettoyage: $150/heure',
+  'Temps additionnel de chorégraphie: $150/heure',
+  '2:30–3:00 minutes of choreography',
+  '2:30–3:00 minutes de chorégraphie',
 ];
 
 requiredRates.forEach((rate) => {
@@ -125,6 +156,9 @@ const forbiddenStrings = [
   'jameselalouf@gmail.com',
   '$350/hour',
   '$350/heure',
+  '$1,200 base + $75/dancer',
+  '$1,500 base + $60/dancer',
+  '$2,500+',
 ];
 
 forbiddenStrings.forEach((text) => {
@@ -132,6 +166,87 @@ forbiddenStrings.forEach((text) => {
   assert(!js.includes(text), `Forbidden legacy string found in app.js: ${text}`);
   assert(!css.includes(text), `Forbidden legacy string found in styles.css: ${text}`);
 });
+
+const forbiddenAddonStrings = [
+  'Performance coaching session: $200/hour',
+  'Session de coaching de performance: $200/heure',
+  'Extra choreography time: $250/hour',
+  'Temps additionnel de chorégraphie: $250/heure',
+  'Music cut / structure support: $300+',
+  'Soutien coupe / structure musicale: $300+',
+  'Video feedback review: $200',
+  'Révision vidéo avec retour: $200',
+  'Music cut / structure support',
+  'Soutien coupe / structure musicale',
+  'Video feedback review',
+  'Révision vidéo avec retour',
+  'Competition polishing session',
+  'Session de polissage compétition',
+  'Travel outside Montreal',
+  'Déplacement à l’extérieur de Montréal',
+];
+
+forbiddenAddonStrings.forEach((text) => {
+  assert(!html.includes(text), `Forbidden old add-on value found in index.html: ${text}`);
+  assert(!js.includes(text), `Forbidden old add-on value found in app.js: ${text}`);
+});
+
+[
+  'Music mix included',
+  'Mix musical inclus',
+  'Cleaning during the session',
+  'Nettoyage pendant la session',
+  'Spacing and partner work',
+  'Travail sur les espacements et le partenaire',
+  'Discounted packages available',
+  'Forfaits à prix réduit disponibles',
+].forEach((text) => {
+  assert(html.includes(text) || js.includes(text), `Missing updated copy marker: ${text}`);
+});
+
+[
+  'Music structure guidance',
+  'Soutien pour la structure musicale',
+  'Basic cleaning during the session',
+  'Nettoyage de base pendant la session',
+  'Basic spacing and partner work',
+  'Travail de base sur les espacements et le partenaire',
+  '3+ hour studio intensive discounted package available',
+  'Intensif studio de 3+ heures, forfait réduit disponible',
+].forEach((text) => {
+  assert(!html.includes(text), `Legacy copy should be absent from index.html: ${text}`);
+  assert(!js.includes(text), `Legacy copy should be absent from app.js: ${text}`);
+});
+
+[
+  'Starting at $800',
+  'Starting at $950',
+  'Starting at $1,100',
+  '$1,500 base + $75/dancer',
+  '$1,800 base + $65/dancer',
+  '$3,000+',
+  'À partir de $800',
+  'À partir de $950',
+  'À partir de $1,100',
+].forEach((legacyRate) => {
+  assert(!html.includes(legacyRate), `Legacy choreography rate should be absent from index.html: ${legacyRate}`);
+  assert(!js.includes(legacyRate), `Legacy choreography rate should be absent from app.js: ${legacyRate}`);
+});
+
+[
+  'solo: 750',
+  'duo: 900',
+  'trio: 1050',
+  'smallBase: 1450',
+  'smallPerDancer: 75',
+  'largeBase: 1750',
+  'largePerDancer: 65',
+  'customLarge: \'Custom quote, usually $2,950+ for 20+ dancers.\'',
+].forEach((marker) => {
+  assert(js.includes(marker), `Missing updated calculator pricing marker in app.js: ${marker}`);
+});
+
+assert(!html.includes('class="rate-length"') && !html.includes('class="rate-preview"'), 'index.html should not contain .rate-length or .rate-preview markup.');
 
 const wrongBrandVisibleStrings = [
   'Vision Labs',
@@ -173,7 +288,26 @@ if (css.includes('@keyframes heroFloat')) {
   assert(!heroFloatBlockMatch[0].includes('rotate('), '@keyframes heroFloat must not include rotation.');
 }
 
-assert(html.includes('assets/jamie-portrait.jpg'), 'index.html must reference assets/jamie-portrait.jpg.');
+assert(html.includes('assets/jamie-portrait-hires.jpg'), 'index.html must reference assets/jamie-portrait-hires.jpg.');
+assert(!html.includes('assets/jamie-portrait.jpg'), 'index.html must not reference assets/jamie-portrait.jpg.');
+
+const removedProofCardPhrases = [
+  'VISION Labs training',
+  'Formation VISION Labs',
+];
+removedProofCardPhrases.forEach((text) => {
+  assert(!html.includes(text), `Removed proof-card phrase found in index.html: ${text}`);
+  assert(!js.includes(text), `Removed proof-card phrase found in app.js: ${text}`);
+});
+
+const requiredVisionLabsMarkers = [
+  'id="vision-labs"',
+  'assets/vision-labs-sample-workbook.pdf',
+  'VISION Labs',
+];
+requiredVisionLabsMarkers.forEach((marker) => {
+  assert(html.includes(marker) || js.includes(marker), `VISION Labs marker missing after proof-card removal: ${marker}`);
+});
 
 const bannedPhrases = [
   'unlock your potential',
