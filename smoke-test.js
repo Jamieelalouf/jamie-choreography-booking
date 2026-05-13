@@ -31,7 +31,7 @@ const instagramUrl2 = 'https://www.instagram.com/p/DXPmW03jrC1/?hl=en&img_index=
 const parseCheck = spawnSync(process.execPath, ['--check', path.join(root, 'app.js')], { encoding: 'utf8' });
 assert(parseCheck.status === 0, `app.js failed parse check: ${parseCheck.stderr || parseCheck.stdout}`);
 
-['id="services"', 'id="rates"', 'id="workshops"', 'id="vision-labs"', 'id="booking"', 'href="assets/vision-labs-sample-workbook.pdf"'].forEach((needle) => {
+['id="services"', 'id="rates"', 'id="workshops"', 'id="vision-labs"', 'id="booking"', 'href="assets/vision-labs-sample-workbook.pdf?v=20260513-new"'].forEach((needle) => {
   assert(html.includes(needle), `index.html missing required marker: ${needle}`);
 });
 
@@ -46,12 +46,13 @@ assert(parseCheck.status === 0, `app.js failed parse check: ${parseCheck.stderr 
 });
 
 [
-  'Train sharper.',
-  'Perform stronger.',
-  'Compete different.',
+  'Workshops.',
+  'Choreography',
+  'Dancer development.',
 ].forEach((text) => {
   assert(html.includes(text), `Hero copy missing: ${text}`);
 });
+assert(css.includes('.hero-line-tight::after') && css.includes('content: "."'), 'Hero punctuation lock style is missing from styles.css.');
 
 const removedHeroOverlayTexts = [
   'Professional dancer · Choreographer · Founder of VISION',
@@ -73,14 +74,26 @@ assert(!html.includes('Suivre @jamieelalouf'), 'Old French hero Instagram badge 
 assert(!js.includes('Follow @jamieelalouf'), 'Old English hero Instagram badge text must be absent from app.js.');
 assert(!js.includes('Suivre @jamieelalouf'), 'Old French hero Instagram badge text must be absent from app.js.');
 
-const mailtoClarificationEn =
-  'Clicking Send opens your email app with a prefilled message to Jamie. You must press send there to finish.';
-const mailtoClarificationFr =
-  'En cliquant sur Envoyer, votre application courriel s’ouvre avec un message prérempli à Jamie. Vous devez cliquer sur envoyer dans cette application pour terminer.';
+const directEmailCtaEn = 'Email me here';
+const directEmailCtaFr = 'Écrivez-moi ici';
+assert(html.includes(directEmailCtaEn), 'English booking email CTA is missing from index.html.');
+assert(js.includes(`topCta: '${directEmailCtaEn}'`), 'English booking top CTA translation is missing from app.js.');
+assert(js.includes(`topCta: '${directEmailCtaFr}'`), 'French booking top CTA translation is missing from app.js.');
+assert(html.includes('href="mailto:jamie@visiondance.ca"'), 'Booking mailto link is missing from index.html.');
+assert(!html.includes('id="booking-form"'), 'Booking form should be removed from index.html.');
+assert(!html.includes('<form'), 'Booking section should not include a questionnaire form.');
+assert(!js.includes("document.getElementById('booking-form')"), 'booking-form DOM lookup should be removed from app.js.');
+assert(!js.includes("addEventListener('submit'"), 'Booking submit handler should be removed from app.js.');
+assert(!js.includes('function toMailtoBody'), 'Questionnaire-to-mailto logic should be removed from app.js.');
+assert(!js.includes('directEmailLine:'), 'Legacy booking directEmailLine translation key should be removed from app.js.');
+assert(!js.includes('directEmail:'), 'Legacy booking directEmail translation key should be removed from app.js.');
 
-assert(html.includes(mailtoClarificationEn), 'Clarified mailto booking note is missing from index.html.');
-assert(js.includes(mailtoClarificationEn), 'Clarified English mailto booking note is missing from app.js translations.');
-assert(js.includes(mailtoClarificationFr), 'Clarified French mailto booking note is missing from app.js translations.');
+const bookingSectionMatch = html.match(/<section[^>]*id="booking"[\s\S]*?<\/section>/);
+assert(bookingSectionMatch, 'Could not parse #booking section from index.html.');
+const bookingSectionHtml = bookingSectionMatch[0];
+const bookingMailtoMatches = bookingSectionHtml.match(/href="mailto:jamie@visiondance\.ca"/g) || [];
+assert(bookingMailtoMatches.length === 1, 'Booking section must contain exactly one mailto:jamie@visiondance.ca link.');
+assert(!bookingSectionHtml.includes('<form'), 'Booking section should not contain any form markup.');
 
 assert(!html.includes('id="process"'), 'Process section should be removed.');
 assert(!html.includes('How booking works'), '"How booking works" should be absent.');
@@ -132,27 +145,15 @@ wrongBrandVisibleStrings.forEach((text) => {
   assert(!js.includes(text), `Wrong brand casing found in app.js visible translations/content: ${text}`);
 });
 
-const bookingStrings = [
+[
   'Name',
   'Studio name',
-  'Email',
   'City / Province',
-  'Competitive choreography',
-  'Studio workshop',
-  'Team coaching',
-  'In-Studio VISION Labs',
-  'Not sure yet',
-  'Beginner',
-  'Intermediate',
-  'Advanced',
-  'Competitive team',
-  'Mixed levels',
+  'What are you interested in?',
   'Preferred date or timeframe',
   'Message / details',
-];
-
-bookingStrings.forEach((item) => {
-  assert(html.includes(item), `Booking form text/option missing: ${item}`);
+].forEach((text) => {
+  assert(!html.includes(text), `Booking questionnaire copy should be absent from index.html: ${text}`);
 });
 
 assert(html.includes('data-lang="en"') && html.includes('data-lang="fr"'), 'EN/FR language toggle buttons are missing.');
@@ -166,6 +167,11 @@ assert(
   css.includes('@keyframes heroLineIn') || css.includes('@keyframes heroRiseIn') || css.includes('@keyframes heroFloat'),
   'styles.css must include at least one hero animation keyframes marker.'
 );
+if (css.includes('@keyframes heroFloat')) {
+  const heroFloatBlockMatch = css.match(/@keyframes\s+heroFloat\s*{[\s\S]*?}/);
+  assert(heroFloatBlockMatch, 'Unable to read @keyframes heroFloat block from styles.css.');
+  assert(!heroFloatBlockMatch[0].includes('rotate('), '@keyframes heroFloat must not include rotation.');
+}
 
 assert(html.includes('assets/jamie-portrait.jpg'), 'index.html must reference assets/jamie-portrait.jpg.');
 

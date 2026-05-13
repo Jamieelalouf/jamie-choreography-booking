@@ -148,6 +148,10 @@ section {
   padding: clamp(4.4rem, 8vw, 7rem) 0;
 }
 
+#booking {
+  padding-top: clamp(2.1rem, 4.2vw, 3.4rem);
+}
+
 .section-dark {
   background: radial-gradient(95% 130% at 88% 0%, #1a2232 0%, #090b10 46%, #050608 100%);
 }
@@ -388,6 +392,16 @@ html.js-enabled .hero-visual {
 
 .hero-copy h1 span {
   display: block;
+  overflow-wrap: normal;
+  word-break: normal;
+}
+
+.hero-copy h1 .hero-line-tight {
+  white-space: nowrap;
+}
+
+.hero-copy h1 .hero-line-tight::after {
+  content: ".";
 }
 
 html.js-enabled .hero-copy .kicker,
@@ -913,6 +927,7 @@ select {
   background:
     radial-gradient(circle at 85% 10%, rgba(126, 156, 225, 0.24), transparent 35%),
     rgba(255, 255, 255, 0.04);
+  text-align: center;
 }
 
 .booking-panel p {
@@ -921,35 +936,12 @@ select {
 
 .booking-top-cta {
   margin-top: 1rem;
-  margin-bottom: 1.05rem;
-}
-
-.booking-form {
-  display: grid;
-  gap: 0.82rem;
-  margin-top: 0.8rem;
-}
-
-.booking-form textarea {
-  width: 100%;
-  border-radius: 11px;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  background: rgba(255, 255, 255, 0.06);
-  color: #f0f2f5;
-  padding: 0.55rem 0.65rem;
-  font: inherit;
-  resize: vertical;
-  min-height: 7rem;
+  justify-content: center;
 }
 
 .booking-email-link {
   color: #dce7ff;
   text-underline-offset: 0.18rem;
-}
-
-.booking-note {
-  margin: 0.9rem 0 1.2rem;
-  font-size: 0.93rem;
 }
 
 .faq-list {
@@ -1043,10 +1035,10 @@ html.js-enabled .reveal.in-view {
 @keyframes heroFloat {
   0%,
   100% {
-    transform: translate3d(0, 0, 0) rotate(0deg);
+    transform: translate3d(0, 0, 0);
   }
   50% {
-    transform: translate3d(0, -7px, 0) rotate(-0.55deg);
+    transform: translate3d(0, -7px, 0);
   }
 }
 
@@ -1089,6 +1081,10 @@ html.js-enabled .reveal.in-view {
   .hero-grid,
   .about-grid {
     grid-template-columns: 1fr;
+  }
+
+  .hero-copy h1 {
+    line-height: 0.98;
   }
 
   .hero-visual {
@@ -1141,8 +1137,7 @@ html.js-enabled .reveal.in-view {
   .btn,
   .faq-question,
   input,
-  select,
-  .booking-form textarea {
+  select {
     min-height: 2.9rem;
   }
 }
